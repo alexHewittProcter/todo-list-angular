@@ -1,0 +1,18 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "dev_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "test": {
+    "username": "root",
+    "password": "root",
+    "database": "dev_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "logging": false
+  }
+}
