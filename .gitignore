@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+#docker volumes
+docker/volumes/dev_db/*
+docker/volumes/qa_db/*
