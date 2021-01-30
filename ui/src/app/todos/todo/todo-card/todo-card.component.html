@@ -1,9 +1,16 @@
 <div class="card" style="">
   <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">
-      Some quick example text to build on the card title and make up the bulk of the card's content.
-    </p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="row">
+      <div class="col">
+        <h5 class="card-title">{{ todo.title }}</h5>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button class="btn btn-primary">View</button>
+          <button class="btn btn-warning">Edit</button>
+          <button class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
