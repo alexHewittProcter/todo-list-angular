@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-md-3">
+    <ng-container [ngTemplateOutlet]="headerLeft"></ng-container>
+  </div>
+  <div class="col-md-3 offset-md-6">
+    <ng-content select=".header-right"></ng-content>
+  </div>
+</div>
+<hr />
