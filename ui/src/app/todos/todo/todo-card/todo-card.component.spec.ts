@@ -2,15 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TodoCardComponent } from './todo-card.component';
 
-describe('TodoCardComponent', () => {
+xdescribe('TodoCardComponent', () => {
   let component: TodoCardComponent;
   let fixture: ComponentFixture<TodoCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TodoCardComponent ]
-    })
-    .compileComponents();
+      declarations: [TodoCardComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
