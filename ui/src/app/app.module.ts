@@ -13,6 +13,7 @@ import { TodosEffects } from './core/store/effects/todos';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { NavbarModule } from './navbar/navbar.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { NavbarModule } from './navbar/navbar.module';
     StoreModule.forRoot(reducers, {}),
     NavbarModule,
     TodosModule,
+    SharedModule,
     EffectsModule.forRoot([TodosEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
