@@ -7,11 +7,11 @@ import { AppState } from 'src/app/core/store/reducer';
 import { getTodos } from 'src/app/core/store/selectors';
 
 @Component({
-  selector: 'app-todo-container',
-  templateUrl: './todo.container.html',
-  styleUrls: ['./todo.container.scss'],
+  selector: 'app-todo-list',
+  templateUrl: './todo-list.component.html',
+  styleUrls: ['./todo-list.component.scss'],
 })
-export class TodoContainer {
+export class TodoListComponent {
   todos$: Observable<Todo[]>;
   constructor(private readonly store: Store<AppState>) {
     this.store.dispatch(new LoadTodosAction());
