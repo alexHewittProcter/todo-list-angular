@@ -17,7 +17,7 @@ const queryDataTest = (dataTest: string, fixture: ComponentFixture<TestHostCompo
   return fixture.nativeElement.querySelector(`[data-test=${dataTest}]`);
 };
 
-fdescribe('HeaderComponent', () => {
+describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let hostComponent: TestHostComponent;
   let fixture: ComponentFixture<TestHostComponent>;

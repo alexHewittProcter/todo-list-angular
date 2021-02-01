@@ -1,0 +1,28 @@
+<div
+  ngbDropdown
+  class="d-inline-block btn-group btn-block"
+  display="dynamic"
+  placement="bottom-right"
+>
+  <button
+    class="btn btn-block"
+    [ngClass]="{ 'btn-primary': status === 'open', 'btn-success': status === 'done' }"
+    ngbDropdownToggle
+  >
+    {{ statuses[status] }}
+  </button>
+  <div ngbDropdownMenu class="btn-block">
+    <button
+      *ngFor="let stat of statusKeys"
+      ngbDropdownItem
+      [ngClass]="{
+        active: stat === status,
+        'btn-primary': status === 'open',
+        'btn-success': status === 'done'
+      }"
+      (click)="changeStatus(stat)"
+    >
+      {{ statuses[stat] }}
+    </button>
+  </div>
+</div>
