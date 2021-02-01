@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { LoadTodosAction } from 'src/app/core/store/actions';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { TodoCardComponent } from './todo-card/todo-card.component';
 
 import { TodoListComponent } from './todo-list.component';
 
@@ -18,7 +20,8 @@ describe('TodoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TodoListComponent],
+      declarations: [TodoListComponent, TodoCardComponent],
+      imports: [SharedModule],
       providers: [provideMockStore({ initialState })],
     }).compileComponents();
   }));

@@ -16,10 +16,7 @@ export class TodoListComponent {
   constructor(private readonly store: Store<AppState>) {
     this.store.dispatch(new LoadTodosAction());
     this.todos$ = this.store.select(getTodos);
-    this.todos$.subscribe((v) => console.log(v));
   }
 
-  test(event) {
-    console.log('Hello');
-  }
+  todoClick(event) {}
 }
