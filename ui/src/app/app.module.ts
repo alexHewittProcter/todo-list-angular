@@ -14,6 +14,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { NavbarModule } from './navbar/navbar.module';
 import { SharedModule } from './shared/shared.module';
+import { effects } from './core/store/effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,7 @@ import { SharedModule } from './shared/shared.module';
     NavbarModule,
     TodosModule,
     SharedModule,
-    EffectsModule.forRoot([TodosEffects]),
+    EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],

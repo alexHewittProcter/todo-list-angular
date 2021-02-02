@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
-import { Actions, Effect, ofType } from "@ngrx/effects";
-import { Action } from "@ngrx/store";
-import { Observable, of } from "rxjs";
-import { catchError, map, mergeMap, switchMap } from "rxjs/operators";
-import { ApiService } from "../../services/api/api.service";
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
+import { ApiService } from '../../services/api/api.service';
 import {
   LoadTodosAction,
   LoadTodosFailureAction,
   LoadTodosSuccessAction,
   LOAD_TODOS,
-} from "../actions";
+} from '../actions';
 
 @Injectable()
 export class TodosEffects {
@@ -26,8 +26,5 @@ export class TodosEffects {
     })
   );
 
-  constructor(
-    private readonly actions$: Actions,
-    private readonly apiService: ApiService
-  ) {}
+  constructor(private readonly actions$: Actions, private readonly apiService: ApiService) {}
 }

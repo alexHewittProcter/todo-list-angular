@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Todo } from 'src/app/core/models/todo';
@@ -13,10 +14,12 @@ import { getTodos } from 'src/app/core/store/selectors';
 })
 export class TodoListComponent {
   todos$: Observable<Todo[]>;
-  constructor(private readonly store: Store<AppState>) {
+  constructor(private readonly store: Store<AppState>, private readonly router: Router) {
     this.store.dispatch(new LoadTodosAction());
     this.todos$ = this.store.select(getTodos);
   }
 
-  todoClick(event) {}
+  todoClick(todoId: string) {
+    this.router.navigate(['todo', todoId]);
+  }
 }

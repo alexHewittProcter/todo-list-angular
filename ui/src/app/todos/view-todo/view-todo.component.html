@@ -6,11 +6,11 @@
 <div class="row">
   <div class="col-md-8">
     <h2>Title</h2>
-    <p>{{ basicTodo.title }}</p>
+    <p>{{ (todoDetails$ | async)?.title }}</p>
     <h2>Description</h2>
-    <p>{{ basicTodo.description }}</p>
+    <p>{{ (todoDetails$ | async)?.description }}</p>
   </div>
   <div class="col-md-4">
-    <app-status-dropdown [status]="basicTodo.status"></app-status-dropdown>
+    <app-status-dropdown [status]="(todoDetails$ | async)?.status"></app-status-dropdown>
   </div>
 </div>

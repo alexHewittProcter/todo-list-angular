@@ -6,17 +6,9 @@ import { Todo } from 'src/app/core/models/todo';
   templateUrl: './todo-card.component.html',
   styleUrls: ['./todo-card.component.scss'],
 })
-export class TodoCardComponent implements OnInit, OnChanges {
+export class TodoCardComponent {
   @Input()
   todo: Todo;
 
   constructor() {}
-
-  ngOnInit() {
-    console.log(this.todo);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-  }
 }
