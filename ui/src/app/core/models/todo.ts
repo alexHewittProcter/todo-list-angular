@@ -1,5 +1,6 @@
 export interface Todo {
-  title: string;
-  description: string;
-  status: "open" | "done";
+  id?: string;
+  title?: string;
+  description?: string;
+  status?: 'open' | 'done';
 }
