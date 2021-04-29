@@ -6,7 +6,9 @@
       </div>
       <div class="col d-flex justify-content-end">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button class="btn btn-primary">View</button>
+          <button class="btn btn-primary" data-test="todo-card-view-btn" (click)="viewTodo($event)">
+            View
+          </button>
           <button class="btn btn-warning">Edit</button>
           <button class="btn btn-danger">Delete</button>
         </div>
