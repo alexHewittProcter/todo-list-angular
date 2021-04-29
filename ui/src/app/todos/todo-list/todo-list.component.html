@@ -12,6 +12,6 @@
     class="list-group-item todo-card"
     (click)="todoClick(todo.id)"
   >
-    <app-todo-card [todo]="todo"></app-todo-card>
+    <app-todo-card [todo]="todo" (onView)="todoClick(todo.id)"></app-todo-card>
   </li>
 </ul>

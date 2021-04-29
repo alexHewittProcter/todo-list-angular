@@ -7,9 +7,10 @@ import { Todo } from 'src/app/core/models/todo';
 
 import { TodoCardComponent } from './todo-card.component';
 
-@Component({ template: `<app-todo-card [todo]="todo"></app-todo-card>` })
+@Component({ template: `<app-todo-card [todo]="todo" (onView)="onView($event)"></app-todo-card>` })
 class TestHostComponent {
   todo: Todo = mockTodo1;
+  onView = jasmine.createSpy();
 }
 
 fdescribe('TodoCardComponent', () => {
@@ -39,5 +40,28 @@ fdescribe('TodoCardComponent', () => {
     const title = fixture.debugElement.query(By.css('.card-title'));
 
     expect(title.nativeElement.innerText).toEqual(mockTodo1.title);
+  });
+
+  it('Should call `viewTodo` when clicking the `View` button', () => {
+    spyOn(component, 'viewTodo');
+
+    const button = fixture.debugElement.query(By.css('[data-test="todo-card-view-btn"]'));
+
+    expect(component.viewTodo).not.toHaveBeenCalled();
+
+    button.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(component.viewTodo).toHaveBeenCalled();
+  });
+
+  it('Should emit `onView` event when calling `viewTodo`', () => {
+    expect(testHostComponent.onView).not.toHaveBeenCalled();
+
+    component.viewTodo(new Event('click'));
+
+    fixture.detectChanges();
+
+    expect(testHostComponent.onView).toHaveBeenCalled();
   });
 });
