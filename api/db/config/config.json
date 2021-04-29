@@ -14,5 +14,13 @@
     "host": "127.0.0.1",
     "dialect": "postgres",
     "logging": false
+  },
+  "docker_dev": {
+    "username": "root",
+    "password": "root",
+    "database": "dev_db",
+    "host": "db",
+    "dialect": "postgres",
+    "logging": false
   }
 }

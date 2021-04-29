@@ -5,6 +5,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../services/api/api.service';
 import {
+  CreateTodoAction,
+  CREATE_TODO,
   LoadTodosAction,
   LoadTodosFailureAction,
   LoadTodosSuccessAction,
@@ -22,6 +24,18 @@ export class TodosEffects {
           return new LoadTodosSuccessAction(v);
         }),
         catchError(() => of(new LoadTodosFailureAction()))
+      );
+    })
+  );
+
+  @Effect()
+  public createTodo$: Observable<Action> = this.actions$.pipe(
+    ofType(CREATE_TODO),
+    mergeMap((action: CreateTodoAction) => {
+      return this.apiService.createTodo(action.payload).pipe(
+        map((v) => {
+          return new LoadTodosAction();
+        })
       );
     })
   );

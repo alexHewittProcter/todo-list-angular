@@ -22,4 +22,8 @@ export class ApiService {
     let params = new HttpParams().set('id', todoId);
     return this.http.get('/api/todo', { params }).pipe(map((v: { todo: Todo }) => v.todo));
   }
+
+  createTodo(todo: Todo): Observable<Todo> {
+    return this.http.post('/api/todo', { todo }).pipe(map((v: { todo: Todo }) => v.todo));
+  }
 }
