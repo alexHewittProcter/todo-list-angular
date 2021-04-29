@@ -13,7 +13,7 @@ class TestHostComponent {
   onView = jasmine.createSpy();
 }
 
-fdescribe('TodoCardComponent', () => {
+describe('TodoCardComponent', () => {
   let testHostComponent: TestHostComponent;
   let component: TodoCardComponent;
   let fixture: ComponentFixture<TestHostComponent>;
