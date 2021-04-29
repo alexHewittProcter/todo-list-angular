@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "npm run db:dev -- -f docker/base.yml",
     "db:dev": "docker-compose -f docker/db.dev.yml",
     "db:qa": "docker-compose -f docker/db.qa.yml",
     "db:view": "docker-compose -f docker/db.admin.yml",

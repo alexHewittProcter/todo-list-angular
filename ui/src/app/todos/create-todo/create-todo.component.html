@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create Todo</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    data-test="create-todo-cancel-cross"
+    (click)="cancelCreate()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label for="todoTitle"> Title*: </label>
+      <input
+        formControlName="title"
+        type="text"
+        class="form-control"
+        id="todoTitle"
+        name="todoTitle"
+        required
+      />
+      <div
+        *ngIf="!title.valid && title.touched"
+        class="alert alert-danger"
+        data-test="create-todo-required-input-warning"
+      >
+        Title is required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="todoDescription"> Description: </label>
+      <textarea
+        formControlName="description"
+        name="todoDescription"
+        id="todoDescription"
+        class="form-control"
+        rows="10"
+      ></textarea>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-danger"
+    data-test="create-todo-cancel-btn"
+    (click)="cancelCreate()"
+  >
+    Cancel
+  </button>
+  <button
+    type="button"
+    class="btn btn-success"
+    data-test="create-todo-create-btn"
+    (click)="createTodo()"
+    [disabled]="!this.form.valid"
+  >
+    Create
+  </button>
+</div>

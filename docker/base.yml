@@ -1,0 +1,30 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ../api
+      dockerfile: ../base.node.Dockerfile
+    volumes:
+      - ../api/src:/app/src
+    expose:
+      - '3000'
+    ports:
+      - 3000:3000
+    networks:
+      - backend-net
+  ui:
+    build:
+      context: ../ui
+      dockerfile: ../base.node.Dockerfile
+    volumes:
+      - ../ui/src:/app/src
+    expose:
+      - '4200'
+      - '3000'
+    ports:
+      - 4200:4200
+    networks:
+      - backend-net
+networks:
+  backend-net:
+    driver: bridge
