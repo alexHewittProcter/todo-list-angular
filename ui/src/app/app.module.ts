@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { NavbarModule } from './navbar/navbar.module';
 import { SharedModule } from './shared/shared.module';
 import { effects } from './core/store/effects';
+import { ModalService } from './core/services/modal/modal.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,7 @@ import { effects } from './core/store/effects';
     EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
-  providers: [],
+  providers: [ModalService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

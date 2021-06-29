@@ -7,7 +7,9 @@ export interface IModalConfig<T> {
   data?: T;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root',
+})
 export class ModalService {
   constructor(private ngbModalService: NgbModal) {}
 
