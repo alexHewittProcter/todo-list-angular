@@ -5,12 +5,12 @@ import { TodoCardComponent } from './todo-list/todo-card/todo-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { ViewTodoComponent } from './view-todo/view-todo.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { CreateTodoComponent } from './create-todo/create-todo.component';
+import { TodoFormComponent } from './todo-form/todo-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [TodoListComponent, TodoCardComponent, ViewTodoComponent, CreateTodoComponent],
-  entryComponents: [CreateTodoComponent],
+  declarations: [TodoListComponent, TodoCardComponent, ViewTodoComponent, TodoFormComponent],
+  entryComponents: [TodoFormComponent],
   exports: [TodoListComponent, ViewTodoComponent],
   imports: [CommonModule, SharedModule, NgbModalModule, ReactiveFormsModule],
 })

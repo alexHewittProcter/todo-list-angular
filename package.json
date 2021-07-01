@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run db:dev -- -f docker/base.yml",
-    "db:dev": "docker-compose -f docker/db.dev.yml",
-    "db:qa": "docker-compose -f docker/db.qa.yml",
-    "db:view": "docker-compose -f docker/db.admin.yml",
-    "db:dev:view": "npm run db:dev -- -f docker/db.admin.yml"
+    "start": "npm run dev up -- --detach",
+    "stop": "npm run dev down",
+    "dev": "docker-compose -f docker/base.yml --env-file ./docker/config/.env.dev",
+    "qa": "docker-compose -f docker/base.yml --env-file ./docker/config/.env.qa",
+    "dev:view": "npm run dev -- -f docker/db.admin.yml",
+    "qa:view": "npm run qa -- -f docker/db.admin.yml"
   },
   "repository": {
     "type": "git",

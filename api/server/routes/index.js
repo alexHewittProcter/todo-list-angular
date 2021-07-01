@@ -71,10 +71,12 @@ router.post('/todo', async (req, res) => {
 
 router.put('/todo', async (req, res) => {
   const { todo, id } = req.body;
-  const updateTodos = await models.todos.update(todo, { where: { id } });
-  if (updateTodos[0] === 0) {
+  const oldTodo = await models.todos.findOne({ where: { id } });
+
+  if (!oldTodo) {
     res.status(404).end();
   } else {
+    await models.todos.update({ ...oldTodo, ...todo }, { where: { id } });
     const updatedTodo = await models.todos.findOne({
       where: { id },
     });

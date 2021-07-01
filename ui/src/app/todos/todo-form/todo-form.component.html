@@ -1,11 +1,11 @@
 <div class="modal-header">
-  <h4 class="modal-title">Create Todo</h4>
+  <h4 class="modal-title">{{ actionText.title }} Todo</h4>
   <button
     type="button"
     class="close"
     aria-label="Close"
-    data-test="create-todo-cancel-cross"
-    (click)="cancelCreate()"
+    data-test="todo-form-cancel-cross"
+    (click)="cancelForm()"
   >
     <span aria-hidden="true">&times;</span>
   </button>
@@ -46,18 +46,18 @@
   <button
     type="button"
     class="btn btn-danger"
-    data-test="create-todo-cancel-btn"
-    (click)="cancelCreate()"
+    data-test="todo-form-cancel-btn"
+    (click)="cancelForm()"
   >
     Cancel
   </button>
   <button
     type="button"
     class="btn btn-success"
-    data-test="create-todo-create-btn"
-    (click)="createTodo()"
-    [disabled]="!this.form.valid"
+    data-test="todo-form-submit-btn"
+    (click)="submitForm()"
+    [disabled]="formValid"
   >
-    Create
+    {{ actionText.submitButton }}
   </button>
 </div>

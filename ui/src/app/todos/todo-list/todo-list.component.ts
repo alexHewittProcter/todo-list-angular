@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { CREATE_TODO_CLOSE_MODAL_STATES } from 'src/app/core/models/create-todo';
+import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { Todo } from 'src/app/core/models/todo';
+import { IModalConfig, ModalService } from 'src/app/core/services/modal/modal.service';
 import { LoadTodosAction } from 'src/app/core/store/actions';
 import { AppState } from 'src/app/core/store/reducer';
 import { getTodos } from 'src/app/core/store/selectors';
-import { CreateTodoComponent } from '../create-todo/create-todo.component';
+import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.component';
 
 @Component({
   selector: 'app-todo-list',
@@ -21,7 +21,7 @@ export class TodoListComponent {
   constructor(
     private readonly store: Store<AppState>,
     private readonly router: Router,
-    private readonly modalService: NgbModal
+    private readonly modalService: ModalService
   ) {
     this.store.dispatch(new LoadTodosAction());
     this.todos$ = this.store.select(getTodos);
@@ -32,8 +32,24 @@ export class TodoListComponent {
   }
 
   createTodo() {
-    this.modalService.open(CreateTodoComponent).result.then((result) => {
-      if (result === CREATE_TODO_CLOSE_MODAL_STATES.TODO_CREATED) {
+    const modalOptions: IModalConfig<TodoFormModalData> = { data: { editMode: false } };
+    const modal = this.modalService.open(TodoFormComponent, modalOptions);
+
+    modal.result.then((result) => {
+      if (result === TODO_FORM_CLOSE_MODAL_STATES.TODO_CREATED) {
+        this.store.dispatch(new LoadTodosAction());
+      }
+    });
+  }
+
+  editTodo(todo: Todo) {
+    const modalOptions: IModalConfig<TodoFormModalData> = {
+      data: { editMode: true, todo, editLocation: 'list' },
+    };
+    const modal = this.modalService.open(TodoFormComponent, modalOptions);
+
+    modal.result.then((result) => {
+      if (result === TODO_FORM_CLOSE_MODAL_STATES.TODO_UPDATED) {
         this.store.dispatch(new LoadTodosAction());
       }
     });

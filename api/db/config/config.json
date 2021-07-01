@@ -1,5 +1,5 @@
 {
-  "development": {
+  "dev": {
     "username": "root",
     "password": "root",
     "database": "dev_db",
@@ -7,7 +7,7 @@
     "dialect": "postgres",
     "logging": false
   },
-  "test": {
+  "qa": {
     "username": "root",
     "password": "root",
     "database": "qa_db",
@@ -19,6 +19,14 @@
     "username": "root",
     "password": "root",
     "database": "dev_db",
+    "host": "db",
+    "dialect": "postgres",
+    "logging": false
+  },
+  "docker_qa": {
+    "username": "root",
+    "password": "root",
+    "database": "qa_db",
     "host": "db",
     "dialect": "postgres",
     "logging": false

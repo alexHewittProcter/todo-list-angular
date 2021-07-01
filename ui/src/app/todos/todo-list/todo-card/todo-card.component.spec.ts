@@ -7,10 +7,17 @@ import { Todo } from 'src/app/core/models/todo';
 
 import { TodoCardComponent } from './todo-card.component';
 
-@Component({ template: `<app-todo-card [todo]="todo" (onView)="onView($event)"></app-todo-card>` })
+@Component({
+  template: `<app-todo-card
+    [todo]="todo"
+    (onView)="onView($event)"
+    (onEdit)="onEdit($event)"
+  ></app-todo-card>`,
+})
 class TestHostComponent {
   todo: Todo = mockTodo1;
   onView = jasmine.createSpy();
+  onEdit = jasmine.createSpy();
 }
 
 describe('TodoCardComponent', () => {
@@ -42,26 +49,53 @@ describe('TodoCardComponent', () => {
     expect(title.nativeElement.innerText).toEqual(mockTodo1.title);
   });
 
-  it('Should call `viewTodo` when clicking the `View` button', () => {
-    spyOn(component, 'viewTodo');
+  describe('View todo', () => {
+    it('Should call `viewTodo` when clicking the `View` button', () => {
+      spyOn(component, 'viewTodo');
 
-    const button = fixture.debugElement.query(By.css('[data-test="todo-card-view-btn"]'));
+      const button = fixture.debugElement.query(By.css('[data-test="todo-card-view-btn"]'));
 
-    expect(component.viewTodo).not.toHaveBeenCalled();
+      expect(component.viewTodo).not.toHaveBeenCalled();
 
-    button.nativeElement.click();
-    fixture.detectChanges();
+      button.nativeElement.click();
+      fixture.detectChanges();
 
-    expect(component.viewTodo).toHaveBeenCalled();
+      expect(component.viewTodo).toHaveBeenCalled();
+    });
+
+    it('Should emit `onView` event when calling `viewTodo`', () => {
+      expect(testHostComponent.onView).not.toHaveBeenCalled();
+
+      component.viewTodo(new Event('click'));
+
+      fixture.detectChanges();
+
+      expect(testHostComponent.onView).toHaveBeenCalled();
+    });
   });
 
-  it('Should emit `onView` event when calling `viewTodo`', () => {
-    expect(testHostComponent.onView).not.toHaveBeenCalled();
+  describe('Edit todo', () => {
+    it('Should call `editTodo` when clicking the `Edit` button', () => {
+      spyOn(component, 'editTodo');
 
-    component.viewTodo(new Event('click'));
+      const button = fixture.debugElement.query(By.css('[data-test="todo-card-edit-btn"]'));
 
-    fixture.detectChanges();
+      expect(component.editTodo).not.toHaveBeenCalled();
 
-    expect(testHostComponent.onView).toHaveBeenCalled();
+      button.nativeElement.click();
+      fixture.detectChanges();
+
+      expect(component.editTodo).toHaveBeenCalled();
+    });
+
+    it('Should emit `onEdit` event when calling `editTodo`', () => {
+      expect(testHostComponent.onEdit).not.toHaveBeenCalled();
+
+      component.editTodo(new Event('click'));
+
+      fixture.detectChanges();
+
+      expect(testHostComponent.onEdit).toHaveBeenCalled();
+    });
   });
 });

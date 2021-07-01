@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  Input,
-  SimpleChanges,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from 'src/app/core/models/todo';
 
 @Component({
@@ -20,12 +12,23 @@ export class TodoCardComponent {
 
   @Output()
   onView: EventEmitter<void> = new EventEmitter();
+  @Output()
+  onEdit: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 
-  viewTodo(event: Event) {
+  private buttonClick(event: Event) {
     event.preventDefault();
     event.stopPropagation();
+  }
+
+  viewTodo(event: Event) {
+    this.buttonClick(event);
     this.onView.emit();
+  }
+
+  editTodo(event: Event) {
+    this.buttonClick(event);
+    this.onEdit.emit();
   }
 }

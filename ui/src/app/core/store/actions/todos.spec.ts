@@ -12,6 +12,12 @@ import {
   LOAD_TODOS,
   LOAD_TODOS_FAILURE,
   LOAD_TODOS_SUCCESS,
+  UpdateTodoAction,
+  UpdateTodoFailureAction,
+  UpdateTodoSuccessAction,
+  UPDATE_TODO,
+  UPDATE_TODO_FAILURE,
+  UPDATE_TODO_SUCCESS,
 } from './todos';
 
 describe('Todos Actions', () => {
@@ -50,5 +56,23 @@ describe('Todos Actions', () => {
     const action = new CreateTodoFailureAction();
 
     expect({ ...action }).toEqual({ type: CREATE_TODO_FAILURE });
+  });
+
+  it('Should return a UpdateTodoAction', () => {
+    const action = new UpdateTodoAction('1', mockTodo1);
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO, id: '1', todo: mockTodo1 });
+  });
+
+  it('Should return a UpdateTodoSuccessAction', () => {
+    const action = new UpdateTodoSuccessAction();
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO_SUCCESS });
+  });
+
+  it('Should return a UpdateTodoFailureAction', () => {
+    const action = new UpdateTodoFailureAction();
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO_FAILURE });
   });
 });

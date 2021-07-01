@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon -L index.js",
     "serve": "node index.js",
+    "setup:dev": "npm run migrate",
+    "setup:qa": "npm run setup:dev && npm run seed",
     "migrate:undo": "npx sequelize db:migrate:undo",
     "migrate": "npx sequelize db:migrate",
     "seed": "npx sequelize db:seed:all",
