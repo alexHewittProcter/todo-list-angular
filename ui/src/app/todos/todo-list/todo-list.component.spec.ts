@@ -102,7 +102,7 @@ describe('TodoListComponent', () => {
       component.editTodo(mockTodo1);
 
       expect(openSpy).toHaveBeenCalledWith(TodoFormComponent, {
-        data: { editMode: true, todo: mockTodo1 },
+        data: { editMode: true, todo: mockTodo1, editLocation: 'list' },
       });
       expect(store.dispatch).toHaveBeenCalledWith(new LoadTodosAction());
     });
@@ -113,7 +113,7 @@ describe('TodoListComponent', () => {
       component.editTodo(mockTodo1);
 
       expect(openSpy).toHaveBeenCalledWith(TodoFormComponent, {
-        data: { editMode: true, todo: mockTodo1 },
+        data: { editMode: true, todo: mockTodo1, editLocation: 'list' },
       });
       expect(store.dispatch).toHaveBeenCalledTimes(1);
     });

@@ -43,12 +43,14 @@ export class TodoListComponent {
   }
 
   editTodo(todo: Todo) {
-    const modalOptions: IModalConfig<TodoFormModalData> = { data: { editMode: true, todo } };
+    const modalOptions: IModalConfig<TodoFormModalData> = {
+      data: { editMode: true, todo, editLocation: 'list' },
+    };
     const modal = this.modalService.open(TodoFormComponent, modalOptions);
 
     modal.result.then((result) => {
       if (result === TODO_FORM_CLOSE_MODAL_STATES.TODO_UPDATED) {
-        // this.store.dispatch(new LoadTodosAction());
+        this.store.dispatch(new LoadTodosAction());
       }
     });
   }

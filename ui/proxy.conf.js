@@ -1,5 +1,8 @@
-var process = require('process');
-var BACKEND_URL = process.env.NODE_ENV == 'docker_dev' ? 'api' : 'localhost';
+let BACKEND_URL = 'localhost';
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV == 'docker_dev' || process.env.NODE_ENV == 'docker_qa') {
+  BACKEND_URL = 'api';
+}
 const PROXY_CONFIG = [
   {
     context: ['/api/**'],

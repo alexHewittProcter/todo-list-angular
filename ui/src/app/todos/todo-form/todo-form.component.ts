@@ -10,6 +10,7 @@ import { AppState } from 'src/app/core/store/reducer';
 
 export interface TodoFormModalData {
   editMode: boolean;
+  editLocation?: 'list' | 'view';
   todo?: Todo;
 }
 

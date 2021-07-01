@@ -45,4 +45,18 @@ describe('ApiService', () => {
     req.flush(response);
     tick(100);
   }));
+
+  it('should return an updated todo', fakeAsync(() => {
+    const todo = mockTodo1;
+    const response = { todo };
+
+    apiService.updateTodo('1', { ...todo, title: 'Test' }).subscribe((v) => {
+      expect(v).toEqual(todo);
+    });
+
+    const req = httpMock.expectOne('/api/todo');
+    expect(req.request.method).toBe('PUT');
+    req.flush(response);
+    tick(100);
+  }));
 });

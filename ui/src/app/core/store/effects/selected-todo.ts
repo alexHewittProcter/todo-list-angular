@@ -5,6 +5,13 @@ import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../services/api/api.service';
 import {
+  LoadTodosAction,
+  UpdateTodoAction,
+  UpdateTodoFailureAction,
+  UpdateTodoSuccessAction,
+  UPDATE_TODO,
+} from '../actions';
+import {
   LoadSelectedTodoAction,
   LoadSelectedTodoFailureAction,
   LoadSelectedTodoSuccessAction,
@@ -22,6 +29,20 @@ export class SelectedTodoEffects {
           return new LoadSelectedTodoSuccessAction(v);
         }),
         catchError(() => of(new LoadSelectedTodoFailureAction()))
+      );
+    })
+  );
+
+  @Effect()
+  public updateTodo$: Observable<Action> = this.actions$.pipe(
+    ofType(UPDATE_TODO),
+    switchMap((action: UpdateTodoAction) => {
+      const { id, todo } = action;
+      return this.apiService.updateTodo(id, todo).pipe(
+        map((v) => {
+          return new UpdateTodoSuccessAction();
+        }),
+        catchError(() => of(new UpdateTodoFailureAction()))
       );
     })
   );

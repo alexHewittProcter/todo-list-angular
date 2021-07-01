@@ -26,4 +26,8 @@ export class ApiService {
   createTodo(todo: Todo): Observable<Todo> {
     return this.http.post('/api/todo', { todo }).pipe(map((v: { todo: Todo }) => v.todo));
   }
+
+  updateTodo(id: string, todo: Todo): Observable<Todo> {
+    return this.http.put('/api/todo', { todo, id }).pipe(map((v: { todo: Todo }) => v.todo));
+  }
 }
