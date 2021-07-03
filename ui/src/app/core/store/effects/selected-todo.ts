@@ -4,18 +4,16 @@ import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../services/api/api.service';
-import {
-  LoadTodosAction,
-  UpdateTodoAction,
-  UpdateTodoFailureAction,
-  UpdateTodoSuccessAction,
-  UPDATE_TODO,
-} from '../actions';
+import { LoadTodosAction } from '../actions';
 import {
   LoadSelectedTodoAction,
   LoadSelectedTodoFailureAction,
   LoadSelectedTodoSuccessAction,
   LOAD_SELECTED_TODO,
+  UpdateTodoAction,
+  UpdateTodoFailureAction,
+  UpdateTodoSuccessAction,
+  UPDATE_TODO,
 } from '../actions/selected-todo';
 
 @Injectable()

@@ -9,10 +9,6 @@ export const CREATE_TODO = 'CREATE_TODO';
 export const CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS';
 export const CREATE_TODO_FAILURE = 'CREATE_TODO_FAILURE';
 
-export const UPDATE_TODO = 'UPDATE_TODO';
-export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS';
-export const UPDATE_TODO_FAILURE = 'UPDATE_TODO_FAILURE';
-
 export class LoadTodosAction implements Action {
   readonly type = LOAD_TODOS;
 }
@@ -39,26 +35,10 @@ export class CreateTodoFailureAction implements Action {
   readonly type = CREATE_TODO_FAILURE;
 }
 
-export class UpdateTodoAction implements Action {
-  readonly type = UPDATE_TODO;
-  constructor(public id: string, public todo: Todo, public editLocation: 'list' | 'view') {}
-}
-
-export class UpdateTodoSuccessAction implements Action {
-  readonly type = UPDATE_TODO_SUCCESS;
-}
-
-export class UpdateTodoFailureAction implements Action {
-  readonly type = UPDATE_TODO_FAILURE;
-}
-
 export type TodosActions =
   | LoadTodosAction
   | LoadTodosSuccessAction
   | LoadTodosFailureAction
   | CreateTodoAction
   | CreateTodoSuccessAction
-  | CreateTodoFailureAction
-  | UpdateTodoAction
-  | UpdateTodoSuccessAction
-  | UpdateTodoFailureAction;
+  | CreateTodoFailureAction;

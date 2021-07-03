@@ -5,8 +5,9 @@ import { Store } from '@ngrx/store';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { Todo } from 'src/app/core/models/todo';
 import { MODAL_DATA } from 'src/app/core/services/modal/modal.service';
-import { CreateTodoAction, UpdateTodoAction } from 'src/app/core/store/actions';
+import { CreateTodoAction } from 'src/app/core/store/actions';
 import { AppState } from 'src/app/core/store/reducer';
+import { UpdateTodoAction } from 'src/app/core/store/actions/selected-todo';
 
 export interface TodoFormModalData {
   editMode: boolean;

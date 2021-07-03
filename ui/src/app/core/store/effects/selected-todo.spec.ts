@@ -5,16 +5,14 @@ import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
 import { mockTodo1 } from '../../mock/todos';
 import { ApiService } from '../../services/api/api.service';
-import {
-  LoadTodosAction,
-  UpdateTodoAction,
-  UpdateTodoFailureAction,
-  UpdateTodoSuccessAction,
-} from '../actions';
+import { LoadTodosAction } from '../actions';
 import {
   LoadSelectedTodoAction,
   LoadSelectedTodoFailureAction,
   LoadSelectedTodoSuccessAction,
+  UpdateTodoAction,
+  UpdateTodoFailureAction,
+  UpdateTodoSuccessAction,
 } from '../actions/selected-todo';
 import { SelectedTodoEffects } from './selected-todo';
 
