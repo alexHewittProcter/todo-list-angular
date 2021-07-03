@@ -59,9 +59,14 @@ describe('Todos Actions', () => {
   });
 
   it('Should return a UpdateTodoAction', () => {
-    const action = new UpdateTodoAction('1', mockTodo1);
+    const action = new UpdateTodoAction('1', mockTodo1, 'list');
 
-    expect({ ...action }).toEqual({ type: UPDATE_TODO, id: '1', todo: mockTodo1 });
+    expect({ ...action }).toEqual({
+      type: UPDATE_TODO,
+      id: '1',
+      todo: mockTodo1,
+      editLocation: 'list',
+    });
   });
 
   it('Should return a UpdateTodoSuccessAction', () => {

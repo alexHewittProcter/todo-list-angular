@@ -83,7 +83,9 @@ export class TodoFormComponent {
   }
 
   updateTodo() {
-    this.store.dispatch(new UpdateTodoAction(this.overlayData.todo.id, this.formTodo));
+    this.store.dispatch(
+      new UpdateTodoAction(this.overlayData.todo.id, this.formTodo, this.overlayData.editLocation)
+    );
     this.activeModal.close(TODO_FORM_CLOSE_MODAL_STATES.TODO_UPDATED);
   }
 

@@ -41,7 +41,7 @@ export class CreateTodoFailureAction implements Action {
 
 export class UpdateTodoAction implements Action {
   readonly type = UPDATE_TODO;
-  constructor(public id: string, public todo: Todo) {}
+  constructor(public id: string, public todo: Todo, public editLocation: 'list' | 'view') {}
 }
 
 export class UpdateTodoSuccessAction implements Action {

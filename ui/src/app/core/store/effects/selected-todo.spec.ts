@@ -5,7 +5,12 @@ import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
 import { mockTodo1 } from '../../mock/todos';
 import { ApiService } from '../../services/api/api.service';
-import { UpdateTodoAction, UpdateTodoFailureAction, UpdateTodoSuccessAction } from '../actions';
+import {
+  LoadTodosAction,
+  UpdateTodoAction,
+  UpdateTodoFailureAction,
+  UpdateTodoSuccessAction,
+} from '../actions';
 import {
   LoadSelectedTodoAction,
   LoadSelectedTodoFailureAction,
@@ -66,27 +71,45 @@ describe('SelectedTodo effecets', () => {
     });
   });
 
-  describe('updateTodo$', () => {
-    it('should dispatch a UpdateTodoSuccessAction when receiving a UpdateTodoAction', () => {
+  describe('updateTodo$ called when receiving a UpdateTodoAction', () => {
+    it('should dispatch a UpdateTodoSuccessAction and LoadTodosAction when editing from the list', () => {
       const response = mockTodo1;
 
       mockApiService.updateTodo.and.returnValue(of(response));
 
-      const inputAction = new UpdateTodoAction('1', mockTodo1);
-      const outputAction = new UpdateTodoSuccessAction();
+      const inputAction = new UpdateTodoAction('1', mockTodo1, 'list');
+      const outputAction1 = new UpdateTodoSuccessAction();
+      const outputAction2 = new LoadTodosAction();
 
       actions$ = hot('-a--', { a: inputAction });
 
-      const expected$ = cold('-b--', { b: outputAction });
+      const expected$ = cold('-(bc)--', { b: outputAction1, c: outputAction2 });
 
       expect(effects.updateTodo$).toBeObservable(expected$);
       expect(mockApiService.updateTodo).toHaveBeenCalledWith('1', mockTodo1);
     });
 
-    it('should dispatch a UpdateTodoFailureAction when receiving a UpdateTodoAction', () => {
+    it('should dispatch a UpdateTodoSuccessAction and LoadSelectedTodoAction when editing from the view', () => {
+      const response = mockTodo1;
+
+      mockApiService.updateTodo.and.returnValue(of(response));
+
+      const inputAction = new UpdateTodoAction('1', mockTodo1, 'view');
+      const outputAction1 = new UpdateTodoSuccessAction();
+      const outputAction2 = new LoadSelectedTodoAction({ todoId: '1' });
+
+      actions$ = hot('-a--', { a: inputAction });
+
+      const expected$ = cold('-(bc)--', { b: outputAction1, c: outputAction2 });
+
+      expect(effects.updateTodo$).toBeObservable(expected$);
+      expect(mockApiService.updateTodo).toHaveBeenCalledWith('1', mockTodo1);
+    });
+
+    it('should dispatch a UpdateTodoFailureAction when api throws error', () => {
       mockApiService.updateTodo.and.returnValue(throwError('Error'));
 
-      const inputAction = new UpdateTodoAction('1', mockTodo1);
+      const inputAction = new UpdateTodoAction('1', mockTodo1, 'list');
       const outputAction = new UpdateTodoFailureAction();
 
       actions$ = hot('-a--', { a: inputAction });

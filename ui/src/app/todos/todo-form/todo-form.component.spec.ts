@@ -19,6 +19,7 @@ const initialState = {
 const editModeData: TodoFormModalData = {
   editMode: true,
   todo: mockTodo1,
+  editLocation: 'view',
 };
 
 const enum DATA_TEST {
@@ -40,6 +41,7 @@ describe('TodoFormComponent', () => {
   function initialise(
     modalData: TodoFormModalData = {
       editMode: false,
+      editLocation: 'view',
     }
   ) {
     closeSpy = jasmine.createSpy();
@@ -287,7 +289,11 @@ describe('TodoFormComponent', () => {
         fixture.detectChanges();
 
         expect(dispatchSpy).toHaveBeenCalledWith(
-          new UpdateTodoAction('1', { title: 'Testing', description: mockTodo1.description })
+          new UpdateTodoAction(
+            '1',
+            { title: 'Testing', description: mockTodo1.description },
+            'view'
+          )
         );
 
         expect(closeSpy).toHaveBeenCalledWith(TODO_FORM_CLOSE_MODAL_STATES.TODO_UPDATED);
