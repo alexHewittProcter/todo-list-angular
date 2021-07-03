@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
@@ -6,6 +7,10 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../../services/api/api.service';
 import { LoadTodosAction } from '../actions';
 import {
+  DeleteTodoAction,
+  DeleteTodoFailureAction,
+  DeleteTodoSuccessAction,
+  DELETE_TODO,
   LoadSelectedTodoAction,
   LoadSelectedTodoFailureAction,
   LoadSelectedTodoSuccessAction,
@@ -48,5 +53,28 @@ export class SelectedTodoEffects {
     })
   );
 
-  constructor(private readonly actions$: Actions, private readonly apiService: ApiService) {}
+  @Effect()
+  public deleteTodo$: Observable<Action> = this.actions$.pipe(
+    ofType(DELETE_TODO),
+    switchMap((action: DeleteTodoAction) => {
+      return this.apiService.deleteTodo(action.id).pipe(
+        switchMap((_v) => {
+          const actions = [new DeleteTodoSuccessAction()];
+          if (action.location === 'list') {
+            return [...actions, new LoadTodosAction()];
+          } else {
+            this.router.navigate(['todos']);
+            return actions;
+          }
+        }),
+        catchError(() => of(new DeleteTodoFailureAction()))
+      );
+    })
+  );
+
+  constructor(
+    private readonly actions$: Actions,
+    private readonly apiService: ApiService,
+    private readonly router: Router
+  ) {}
 }

@@ -12,12 +12,14 @@ import { TodoCardComponent } from './todo-card.component';
     [todo]="todo"
     (onView)="onView($event)"
     (onEdit)="onEdit($event)"
+    (onDelete)="onDelete($event)"
   ></app-todo-card>`,
 })
 class TestHostComponent {
   todo: Todo = mockTodo1;
   onView = jasmine.createSpy();
   onEdit = jasmine.createSpy();
+  onDelete = jasmine.createSpy();
 }
 
 describe('TodoCardComponent', () => {
@@ -96,6 +98,31 @@ describe('TodoCardComponent', () => {
       fixture.detectChanges();
 
       expect(testHostComponent.onEdit).toHaveBeenCalled();
+    });
+  });
+
+  describe('Delete todo', () => {
+    it('Should call `deleteTodo` when clicking the `Delete` button', () => {
+      spyOn(component, 'deleteTodo');
+
+      const button = fixture.debugElement.query(By.css('[data-test="todo-card-delete-btn"]'));
+
+      expect(component.deleteTodo).not.toHaveBeenCalled();
+
+      button.nativeElement.click();
+      fixture.detectChanges();
+
+      expect(component.deleteTodo).toHaveBeenCalled();
+    });
+
+    it('Should emit `onDelete` event when calling `deleteTodo`', () => {
+      expect(testHostComponent.onDelete).not.toHaveBeenCalled();
+
+      component.deleteTodo(new Event('click'));
+
+      fixture.detectChanges();
+
+      expect(testHostComponent.onDelete).toHaveBeenCalled();
     });
   });
 });

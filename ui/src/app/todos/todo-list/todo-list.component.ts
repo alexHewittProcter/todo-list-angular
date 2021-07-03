@@ -9,6 +9,7 @@ import { LoadTodosAction } from 'src/app/core/store/actions';
 import { AppState } from 'src/app/core/store/reducer';
 import { getTodos } from 'src/app/core/store/selectors';
 import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.component';
+import { DeleteTodoAction } from 'src/app/core/store/actions/selected-todo';
 
 @Component({
   selector: 'app-todo-list',
@@ -53,5 +54,9 @@ export class TodoListComponent {
         this.store.dispatch(new LoadTodosAction());
       }
     });
+  }
+
+  deleteTodo(id: string) {
+    this.store.dispatch(new DeleteTodoAction(id, 'list'));
   }
 }

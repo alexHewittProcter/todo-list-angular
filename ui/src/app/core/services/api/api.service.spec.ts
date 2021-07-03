@@ -59,4 +59,16 @@ describe('ApiService', () => {
     req.flush(response);
     tick(100);
   }));
+
+  it('should return the id of the deleted todo', fakeAsync(() => {
+    const id = '1';
+    const response = { id };
+
+    apiService.deleteTodo(id).subscribe((v) => expect(v).toEqual(id));
+
+    const req = httpMock.expectOne('/api/todo');
+    expect(req.request.method).toBe('DELETE');
+    req.flush(response);
+    tick(100);
+  }));
 });

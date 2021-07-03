@@ -150,5 +150,11 @@ describe('Base endpoints', () => {
       expect(res.status).toBe(404);
       done();
     });
+
+    it('should return 422 error status when id missing', async (done) => {
+      const res = await request(app).delete('/api/todo').send({});
+      expect(res.status).toBe(422);
+      done();
+    });
   });
 });

@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
@@ -7,6 +8,9 @@ import { mockTodo1 } from '../../mock/todos';
 import { ApiService } from '../../services/api/api.service';
 import { LoadTodosAction } from '../actions';
 import {
+  DeleteTodoAction,
+  DeleteTodoFailureAction,
+  DeleteTodoSuccessAction,
   LoadSelectedTodoAction,
   LoadSelectedTodoFailureAction,
   LoadSelectedTodoSuccessAction,
@@ -20,18 +24,23 @@ describe('SelectedTodo effecets', () => {
   let effects: SelectedTodoEffects;
   let actions$ = new Observable<Actions>();
 
+  let navigateSpy;
   let mockApiService;
   beforeEach(() => {
     mockApiService = {
       getTodo: jasmine.createSpy(),
       updateTodo: jasmine.createSpy(),
+      deleteTodo: jasmine.createSpy(),
     };
+
+    navigateSpy = jasmine.createSpy();
 
     TestBed.configureTestingModule({
       providers: [
         SelectedTodoEffects,
         provideMockActions(() => actions$),
         { provide: ApiService, useValue: mockApiService },
+        { provide: Router, useValue: { navigate: navigateSpy } },
       ],
     });
 
@@ -116,6 +125,60 @@ describe('SelectedTodo effecets', () => {
 
       expect(effects.updateTodo$).toBeObservable(expected$);
       expect(mockApiService.updateTodo).toHaveBeenCalledWith('1', mockTodo1);
+    });
+  });
+
+  describe('deleteTodo$ when receiving a DeleteTodoAction', () => {
+    it('should dispatch a DeleteTodoSuccessAction and LoadTodosAction', () => {
+      const id = '1';
+      const response = { id };
+
+      mockApiService.deleteTodo.and.returnValue(of(response));
+
+      const inputAction = new DeleteTodoAction(id, 'list');
+      const outputAction1 = new DeleteTodoSuccessAction();
+      const outputAction2 = new LoadTodosAction();
+
+      actions$ = hot('-a--', { a: inputAction });
+
+      const expected$ = cold('-(bc)--', { b: outputAction1, c: outputAction2 });
+
+      expect(effects.deleteTodo$).toBeObservable(expected$);
+      expect(mockApiService.deleteTodo).toHaveBeenCalledWith('1');
+    });
+
+    it('should dispatch a DeleteTodoSuccessAction and navigate to `todos`', () => {
+      const id = '1';
+      const response = { id };
+
+      mockApiService.deleteTodo.and.returnValue(of(response));
+
+      const inputAction = new DeleteTodoAction(id, 'view');
+      const outputAction = new DeleteTodoSuccessAction();
+
+      actions$ = hot('-a--', { a: inputAction });
+
+      const expected$ = cold('-b--', { b: outputAction });
+
+      expect(effects.deleteTodo$).toBeObservable(expected$);
+      expect(mockApiService.deleteTodo).toHaveBeenCalledWith('1');
+      expect(navigateSpy).toHaveBeenCalledWith(['todos']);
+    });
+
+    it('should dispatch a DeleteTodoFailureAction', () => {
+      const id = '1';
+
+      mockApiService.deleteTodo.and.returnValue(throwError('Error'));
+
+      const inputAction = new DeleteTodoAction(id, 'list');
+      const outputAction = new DeleteTodoFailureAction();
+
+      actions$ = hot('-a--', { a: inputAction });
+
+      const expected$ = cold('-b--', { b: outputAction });
+
+      expect(effects.deleteTodo$).toBeObservable(expected$);
+      expect(mockApiService.deleteTodo).toHaveBeenCalledWith('1');
     });
   });
 });
