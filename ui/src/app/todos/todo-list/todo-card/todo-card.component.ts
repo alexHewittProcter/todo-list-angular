@@ -14,6 +14,8 @@ export class TodoCardComponent {
   onView: EventEmitter<void> = new EventEmitter();
   @Output()
   onEdit: EventEmitter<void> = new EventEmitter();
+  @Output()
+  onDelete: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 
@@ -30,5 +32,10 @@ export class TodoCardComponent {
   editTodo(event: Event) {
     this.buttonClick(event);
     this.onEdit.emit();
+  }
+
+  deleteTodo(event: Event) {
+    this.buttonClick(event);
+    this.onDelete.emit();
   }
 }

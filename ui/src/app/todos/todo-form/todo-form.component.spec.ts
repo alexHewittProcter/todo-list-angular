@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store';
 import { mockTodo1 } from 'src/app/core/mock/todos';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { MODAL_DATA } from 'src/app/core/services/modal/modal.service';
-import { CreateTodoAction, UpdateTodoAction } from 'src/app/core/store/actions';
+import { CreateTodoAction } from 'src/app/core/store/actions';
+import { UpdateTodoAction } from 'src/app/core/store/actions/selected-todo';
 
 import { TodoFormComponent, TodoFormModalData } from './todo-form.component';
 

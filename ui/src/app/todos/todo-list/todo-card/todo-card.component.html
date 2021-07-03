@@ -12,7 +12,13 @@
           <button class="btn btn-warning" data-test="todo-card-edit-btn" (click)="editTodo($event)">
             Edit
           </button>
-          <button class="btn btn-danger">Delete</button>
+          <button
+            class="btn btn-danger"
+            data-test="todo-card-delete-btn"
+            (click)="deleteTodo($event)"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </div>

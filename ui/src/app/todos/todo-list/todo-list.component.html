@@ -16,6 +16,7 @@
       [todo]="todo"
       (onView)="todoClick(todo.id)"
       (onEdit)="editTodo(todo)"
+      (onDelete)="deleteTodo(todo.id)"
     ></app-todo-card>
   </li>
 </ul>

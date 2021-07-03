@@ -7,6 +7,7 @@ import { mockTodo1 } from 'src/app/core/mock/todos';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { ModalService } from 'src/app/core/services/modal/modal.service';
 import { LoadTodosAction } from 'src/app/core/store/actions';
+import { DeleteTodoAction } from 'src/app/core/store/actions/selected-todo';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
 import { TodoCardComponent } from './todo-card/todo-card.component';
@@ -117,5 +118,10 @@ describe('TodoListComponent', () => {
       });
       expect(store.dispatch).toHaveBeenCalledTimes(1);
     });
+  });
+
+  it('Should dispatch DeleteTodoAction with `list` when calling deleteTodo', () => {
+    component.deleteTodo(mockTodo1.id);
+    expect(store.dispatch).toHaveBeenCalledWith(new DeleteTodoAction(mockTodo1.id, 'list'));
   });
 });

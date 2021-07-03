@@ -1,11 +1,24 @@
+import { act } from '@ngrx/effects';
 import { mockTodo1 } from '../../mock/todos';
 import {
+  DeleteTodoAction,
+  DeleteTodoFailureAction,
+  DeleteTodoSuccessAction,
+  DELETE_TODO,
+  DELETE_TODO_FAILURE,
+  DELETE_TODO_SUCCESS,
   LoadSelectedTodoAction,
   LoadSelectedTodoFailureAction,
   LoadSelectedTodoSuccessAction,
   LOAD_SELECTED_TODO,
   LOAD_SELECTED_TODO_FAILURE,
   LOAD_SELECTED_TODO_SUCCESS,
+  UpdateTodoAction,
+  UpdateTodoFailureAction,
+  UpdateTodoSuccessAction,
+  UPDATE_TODO,
+  UPDATE_TODO_FAILURE,
+  UPDATE_TODO_SUCCESS,
 } from './selected-todo';
 
 describe('Selected todo actions', () => {
@@ -27,5 +40,47 @@ describe('Selected todo actions', () => {
     const action = new LoadSelectedTodoFailureAction();
 
     expect({ ...action }).toEqual({ type: LOAD_SELECTED_TODO_FAILURE });
+  });
+
+  it('Should return a UpdateTodoAction', () => {
+    const action = new UpdateTodoAction('1', mockTodo1, 'list');
+
+    expect({ ...action }).toEqual({
+      type: UPDATE_TODO,
+      id: '1',
+      todo: mockTodo1,
+      editLocation: 'list',
+    });
+  });
+
+  it('Should return a UpdateTodoSuccessAction', () => {
+    const action = new UpdateTodoSuccessAction();
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO_SUCCESS });
+  });
+
+  it('Should return a UpdateTodoFailureAction', () => {
+    const action = new UpdateTodoFailureAction();
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO_FAILURE });
+  });
+
+  it('Should return DeleteTodoAction', () => {
+    const id = '1';
+    const action = new DeleteTodoAction(id, 'list');
+
+    expect({ ...action }).toEqual({ type: DELETE_TODO, id, location: 'list' });
+  });
+
+  it('Should return DeleteTodoSuccessAction', () => {
+    const action = new DeleteTodoSuccessAction();
+
+    expect({ ...action }).toEqual({ type: DELETE_TODO_SUCCESS });
+  });
+
+  it('Should return DeleteTodoFailureAction', () => {
+    const action = new DeleteTodoFailureAction();
+
+    expect({ ...action }).toEqual({ type: DELETE_TODO_FAILURE });
   });
 });

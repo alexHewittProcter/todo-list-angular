@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Todo } from 'src/app/core/models/todo';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { IModalConfig, ModalService } from 'src/app/core/services/modal/modal.service';
-import { LoadTodosAction } from 'src/app/core/store/actions';
-import { LoadSelectedTodoAction } from 'src/app/core/store/actions/selected-todo';
+import { DeleteTodoAction, LoadSelectedTodoAction } from 'src/app/core/store/actions/selected-todo';
 import { AppState } from 'src/app/core/store/reducer';
 import { getTodoDetails } from 'src/app/core/store/selectors/selected-todo';
 import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.component';
@@ -62,5 +61,9 @@ export class ViewTodoComponent implements OnInit, OnDestroy {
         this.loadTodo();
       }
     });
+  }
+
+  deleteTodo() {
+    this.store.dispatch(new DeleteTodoAction(this.todo.id, 'view'));
   }
 }

@@ -86,11 +86,15 @@ router.put('/todo', async (req, res) => {
 
 router.delete('/todo', async (req, res) => {
   const { id } = req.body;
-  const deletedTodo = await models.todos.destroy({ where: { id } });
-  if (deletedTodo === 0) {
-    res.status(404).end();
+  if (id === undefined) {
+    res.status(422).end();
   } else {
-    res.json({ id });
+    const deletedTodo = await models.todos.destroy({ where: { id } });
+    if (deletedTodo === 0) {
+      res.status(404).end();
+    } else {
+      res.json({ id });
+    }
   }
 });
 

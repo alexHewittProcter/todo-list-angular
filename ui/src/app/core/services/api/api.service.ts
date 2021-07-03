@@ -30,4 +30,10 @@ export class ApiService {
   updateTodo(id: string, todo: Todo): Observable<Todo> {
     return this.http.put('/api/todo', { todo, id }).pipe(map((v: { todo: Todo }) => v.todo));
   }
+
+  deleteTodo(id: string): Observable<string> {
+    return this.http
+      .request('DELETE', '/api/todo', { responseType: 'json', body: { id } })
+      .pipe(map((v: { id: string }) => v.id));
+  }
 }
