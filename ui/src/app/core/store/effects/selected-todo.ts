@@ -37,10 +37,13 @@ export class SelectedTodoEffects {
   public updateTodo$: Observable<Action> = this.actions$.pipe(
     ofType(UPDATE_TODO),
     switchMap((action: UpdateTodoAction) => {
-      const { id, todo } = action;
+      const { id, todo, editLocation } = action;
       return this.apiService.updateTodo(id, todo).pipe(
-        map((v) => {
-          return new UpdateTodoSuccessAction();
+        switchMap((v) => {
+          if (editLocation === 'list') {
+            return [new UpdateTodoSuccessAction(), new LoadTodosAction()];
+          }
+          return [new UpdateTodoSuccessAction(), new LoadSelectedTodoAction({ todoId: id })];
         }),
         catchError(() => of(new UpdateTodoFailureAction()))
       );
