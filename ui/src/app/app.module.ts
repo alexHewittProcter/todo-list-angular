@@ -16,6 +16,8 @@ import { NavbarModule } from './navbar/navbar.module';
 import { SharedModule } from './shared/shared.module';
 import { effects } from './core/store/effects';
 import { ModalService } from './core/services/modal/modal.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +32,8 @@ import { ModalService } from './core/services/modal/modal.service';
     SharedModule,
     EffectsModule.forRoot(effects),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    BrowserAnimationsModule,
+    TabsModule.forRoot(),
   ],
   providers: [ModalService],
   bootstrap: [AppComponent],
