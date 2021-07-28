@@ -16,6 +16,9 @@ import {
   LoadSelectedTodoSuccessAction,
   UpdateTodoAction,
   UpdateTodoFailureAction,
+  UpdateTodoStatusAction,
+  UpdateTodoStatusFailureAction,
+  UpdateTodoStatusSuccessAction,
   UpdateTodoSuccessAction,
 } from '../actions/selected-todo';
 import { SelectedTodoEffects } from './selected-todo';
@@ -31,6 +34,7 @@ describe('SelectedTodo effecets', () => {
       getTodo: jasmine.createSpy(),
       updateTodo: jasmine.createSpy(),
       deleteTodo: jasmine.createSpy(),
+      updateTodoStatus: jasmine.createSpy(),
     };
 
     navigateSpy = jasmine.createSpy();
@@ -125,6 +129,37 @@ describe('SelectedTodo effecets', () => {
 
       expect(effects.updateTodo$).toBeObservable(expected$);
       expect(mockApiService.updateTodo).toHaveBeenCalledWith('1', mockTodo1);
+    });
+  });
+
+  describe('updateTodoStatus$ when receiving a UpdateTodoStatusAction', () => {
+    it('Should dispatch a UpdateTodoStatusSuccessAction and LoadSelectedTodoAction', () => {
+      const response = mockTodo1;
+
+      mockApiService.updateTodoStatus.and.returnValue(of(response));
+
+      const inputAction = new UpdateTodoStatusAction('1', 'done');
+      actions$ = hot('-a--', { a: inputAction });
+
+      const outputAction1 = new UpdateTodoStatusSuccessAction();
+      const outputAction2 = new LoadSelectedTodoAction({ todoId: '1' });
+      const expected$ = cold('-(bc)--', { b: outputAction1, c: outputAction2 });
+
+      expect(effects.updateTodoStatus$).toBeObservable(expected$);
+      expect(mockApiService.updateTodoStatus).toHaveBeenCalledWith('1', 'done');
+    });
+
+    it('Should dispatch UpdateTodoStatusFailureAction when receiving an api error', () => {
+      mockApiService.updateTodoStatus.and.returnValue(throwError('Error'));
+
+      const inputAction = new UpdateTodoStatusAction('1', 'open');
+      actions$ = hot('-a--', { a: inputAction });
+
+      const outputAction = new UpdateTodoStatusFailureAction();
+      const expected$ = cold('-b--', { b: outputAction });
+
+      expect(effects.updateTodoStatus$).toBeObservable(expected$);
+      expect(mockApiService.updateTodoStatus).toHaveBeenCalledWith('1', 'open');
     });
   });
 

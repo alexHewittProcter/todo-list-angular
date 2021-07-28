@@ -6,7 +6,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Todo } from 'src/app/core/models/todo';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { IModalConfig, ModalService } from 'src/app/core/services/modal/modal.service';
-import { DeleteTodoAction, LoadSelectedTodoAction } from 'src/app/core/store/actions/selected-todo';
+import {
+  DeleteTodoAction,
+  LoadSelectedTodoAction,
+  UpdateTodoStatusAction,
+} from 'src/app/core/store/actions/selected-todo';
 import { AppState } from 'src/app/core/store/reducer';
 import { getTodoDetails } from 'src/app/core/store/selectors/selected-todo';
 import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.component';
@@ -17,6 +21,7 @@ import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.com
   styleUrls: ['./view-todo.component.scss'],
 })
 export class ViewTodoComponent implements OnInit, OnDestroy {
+  breadcrums = ['todos', 'todo'];
   private todoId: string;
   private todo: Todo;
 
@@ -65,5 +70,9 @@ export class ViewTodoComponent implements OnInit, OnDestroy {
 
   deleteTodo() {
     this.store.dispatch(new DeleteTodoAction(this.todo.id, 'view'));
+  }
+
+  updateTodoStatus(status: 'open' | 'done'): void {
+    this.store.dispatch(new UpdateTodoStatusAction(this.todo.id, status));
   }
 }

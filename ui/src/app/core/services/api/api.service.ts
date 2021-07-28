@@ -31,6 +31,14 @@ export class ApiService {
     return this.http.put('/api/todo', { todo, id }).pipe(map((v: { todo: Todo }) => v.todo));
   }
 
+  updateTodoStatus(id: string, status: 'open' | 'done'): Observable<Todo> {
+    return this.http.put('/api/todo/status', { id, status }).pipe(
+      map((v: { todo: Todo }) => {
+        return v.todo;
+      })
+    );
+  }
+
   deleteTodo(id: string): Observable<string> {
     return this.http
       .request('DELETE', '/api/todo', { responseType: 'json', body: { id } })

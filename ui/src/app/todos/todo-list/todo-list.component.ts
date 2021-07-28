@@ -17,6 +17,7 @@ import { DeleteTodoAction } from 'src/app/core/store/actions/selected-todo';
   styleUrls: ['./todo-list.component.scss'],
 })
 export class TodoListComponent {
+  breadcrums = ['todos'];
   todos$: Observable<Todo[]>;
 
   constructor(

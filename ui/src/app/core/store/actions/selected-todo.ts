@@ -9,6 +9,10 @@ export const UPDATE_TODO = 'UPDATE_TODO';
 export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS';
 export const UPDATE_TODO_FAILURE = 'UPDATE_TODO_FAILURE';
 
+export const UPDATE_TODO_STATUS = 'UPDATE_TODO_STATUS';
+export const UPDATE_TODO_STATUS_SUCCESS = 'UPDATE_TODO_STATUS_SUCCESS';
+export const UPDATE_TODO_STATUS_FAILURE = 'UPDATE_TODO_STATUS_FAILURE';
+
 export const DELETE_TODO = 'DELETE_TODO';
 export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS';
 export const DELETE_TODO_FAILURE = 'DELETE_TODO_FAILURE';
@@ -39,6 +43,19 @@ export class UpdateTodoFailureAction implements Action {
   readonly type = UPDATE_TODO_FAILURE;
 }
 
+export class UpdateTodoStatusAction implements Action {
+  readonly type = UPDATE_TODO_STATUS;
+  constructor(public id: string, public status: 'open' | 'done') {}
+}
+
+export class UpdateTodoStatusSuccessAction implements Action {
+  readonly type = UPDATE_TODO_STATUS_SUCCESS;
+}
+
+export class UpdateTodoStatusFailureAction implements Action {
+  readonly type = UPDATE_TODO_STATUS_FAILURE;
+}
+
 export class DeleteTodoAction implements Action {
   readonly type = DELETE_TODO;
   constructor(public id: string, public location: 'list' | 'view') {}
@@ -59,6 +76,9 @@ export type SelectedTodoActions =
   | UpdateTodoAction
   | UpdateTodoSuccessAction
   | UpdateTodoFailureAction
+  | UpdateTodoStatusAction
+  | UpdateTodoStatusSuccessAction
+  | UpdateTodoStatusFailureAction
   | DeleteTodoAction
   | DeleteTodoSuccessAction
   | DeleteTodoFailureAction;
