@@ -69,6 +69,22 @@ router.post('/todo', async (req, res) => {
   res.json({ todo: newTodo });
 });
 
+// Contract
+// id:string - todo id
+// status:"open"|"done" - new status of todo
+router.put('/todo/status', async (req, res) => {
+  const { id, status } = req.body;
+
+  if (!!id || !!status) {
+    await models.todos.update({ status }, { where: { id } });
+    const todo = await models.todos.findOne({ where: { id } });
+
+    res.json({ todo }).end();
+  } else {
+    res.status(400).end();
+  }
+});
+
 router.put('/todo', async (req, res) => {
   const { todo, id } = req.body;
   const oldTodo = await models.todos.findOne({ where: { id } });

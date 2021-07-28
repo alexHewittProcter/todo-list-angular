@@ -1,11 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { mockTodo1 } from 'src/app/core/mock/todos';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { ModalService } from 'src/app/core/services/modal/modal.service';
-import { DeleteTodoAction, LoadSelectedTodoAction } from 'src/app/core/store/actions/selected-todo';
+import {
+  DeleteTodoAction,
+  LoadSelectedTodoAction,
+  UpdateTodoStatusAction,
+} from 'src/app/core/store/actions/selected-todo';
 import { getTodoDetails } from 'src/app/core/store/selectors';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
@@ -52,6 +56,7 @@ describe('ViewTodoComponent', () => {
         },
         { provide: Store, useValue: { dispatch, select } },
         { provide: ModalService, useValue: { open: openSpy } },
+        { provide: Router, useValue: { navigate: jasmine.createSpy() } },
       ],
     }).compileComponents();
   }));
@@ -106,5 +111,10 @@ describe('ViewTodoComponent', () => {
   it('Should dispatch DeleteTodoAction with `view` when calling deleteTodo', () => {
     component.deleteTodo();
     expect(dispatch).toHaveBeenCalledWith(new DeleteTodoAction(mockTodo1.id, 'view'));
+  });
+
+  it('Should dispatch UpdateTodoStatusAction when calling updateTodoStatus', () => {
+    component.updateTodoStatus('open');
+    expect(dispatch).toHaveBeenCalledWith(new UpdateTodoStatusAction(mockTodo1.id, 'open'));
   });
 });

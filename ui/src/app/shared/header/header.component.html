@@ -1,6 +1,17 @@
 <div class="row">
   <div class="col-md-6">
     <ng-container [ngTemplateOutlet]="headerLeft"></ng-container>
+    <span class="breadcrums">
+      <ng-container *ngFor="let crum of breadcrums; let i = index">
+        <span
+          class="title"
+          (click)="navigateBreadcrum(i)"
+          [ngClass]="{ link: i !== breadcrums.length - 1 }"
+          >{{ crum.toUpperCase() }}</span
+        >
+        <span *ngIf="i !== breadcrums.length - 1">/</span>
+      </ng-container>
+    </span>
   </div>
   <div class="col-md-3 offset-md-3">
     <ng-content select=".header-right"></ng-content>

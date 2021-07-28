@@ -1,0 +1,15 @@
+:host {
+  .title {
+    text-decoration: underline;
+
+    &.link {
+      font-size: larg;
+      text-decoration: underline;
+      color: lightblue;
+      cursor: pointer;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

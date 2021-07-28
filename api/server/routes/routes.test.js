@@ -133,6 +133,28 @@ describe('Base endpoints', () => {
     });
   });
 
+  describe('/todo/status PUT endpoint', () => {
+    afterAll(async (done) => {
+      await request(app).put('/api/todo/status').send({ id: '2', status: 'open' });
+      done();
+    });
+
+    it('Should update todo', async (done) => {
+      let getTodoRes = await request(app).get('/api/todo?id=2');
+      expect(getTodoRes.body.todo.status).toEqual('open');
+
+      const newStatus = 'done';
+      updateTodoStatus = await request(app)
+        .put('/api/todo/status')
+        .send({ id: '2', status: newStatus });
+
+      getTodoRes = await request(app).get('/api/todo?id=2');
+      expect(getTodoRes.body.todo.status).toEqual('done');
+
+      done();
+    });
+  });
+
   describe('/todo DELETE endpoint', () => {
     it('should delete endpoint', async (done) => {
       const createRes = await request(app).post('/api/todo').send({ todo: mockTodo });

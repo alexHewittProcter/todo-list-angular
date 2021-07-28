@@ -1,4 +1,4 @@
-<app-header>
+<app-header [breadcrums]="breadcrums">
   <ng-template #headerLeft>
     <h2>Todo - {{ (todoDetails$ | async)?.title }}</h2>
   </ng-template>
@@ -21,6 +21,9 @@
     <p>{{ (todoDetails$ | async)?.description }}</p>
   </div>
   <div class="col-md-3">
-    <app-status-dropdown [status]="(todoDetails$ | async)?.status"></app-status-dropdown>
+    <app-status-dropdown
+      [status]="(todoDetails$ | async)?.status"
+      (statusChange)="updateTodoStatus($event)"
+    ></app-status-dropdown>
   </div>
 </div>

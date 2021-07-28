@@ -60,6 +60,20 @@ describe('ApiService', () => {
     tick(100);
   }));
 
+  it('should make a api call to update todo status', fakeAsync(() => {
+    const todo = mockTodo1;
+    const response = { todo };
+
+    apiService.updateTodoStatus('1', 'done').subscribe((v) => {
+      expect(v).toEqual(todo);
+    });
+
+    const req = httpMock.expectOne('/api/todo/status');
+    expect(req.request.method).toBe('PUT');
+    req.flush(response);
+    tick(100);
+  }));
+
   it('should return the id of the deleted todo', fakeAsync(() => {
     const id = '1';
     const response = { id };

@@ -17,8 +17,12 @@ import {
   LOAD_SELECTED_TODO,
   UpdateTodoAction,
   UpdateTodoFailureAction,
+  UpdateTodoStatusAction,
+  UpdateTodoStatusFailureAction,
+  UpdateTodoStatusSuccessAction,
   UpdateTodoSuccessAction,
   UPDATE_TODO,
+  UPDATE_TODO_STATUS,
 } from '../actions/selected-todo';
 
 @Injectable()
@@ -49,6 +53,20 @@ export class SelectedTodoEffects {
           return [new UpdateTodoSuccessAction(), new LoadSelectedTodoAction({ todoId: id })];
         }),
         catchError(() => of(new UpdateTodoFailureAction()))
+      );
+    })
+  );
+
+  @Effect()
+  public updateTodoStatus$: Observable<Action> = this.actions$.pipe(
+    ofType(UPDATE_TODO_STATUS),
+    switchMap((action: UpdateTodoStatusAction) => {
+      const { id, status } = action;
+      return this.apiService.updateTodoStatus(id, status).pipe(
+        switchMap((v) => {
+          return [new UpdateTodoStatusSuccessAction(), new LoadSelectedTodoAction({ todoId: id })];
+        }),
+        catchError(() => of(new UpdateTodoStatusFailureAction()))
       );
     })
   );

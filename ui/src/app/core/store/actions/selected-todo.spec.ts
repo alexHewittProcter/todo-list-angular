@@ -15,9 +15,15 @@ import {
   LOAD_SELECTED_TODO_SUCCESS,
   UpdateTodoAction,
   UpdateTodoFailureAction,
+  UpdateTodoStatusAction,
+  UpdateTodoStatusFailureAction,
+  UpdateTodoStatusSuccessAction,
   UpdateTodoSuccessAction,
   UPDATE_TODO,
   UPDATE_TODO_FAILURE,
+  UPDATE_TODO_STATUS,
+  UPDATE_TODO_STATUS_FAILURE,
+  UPDATE_TODO_STATUS_SUCCESS,
   UPDATE_TODO_SUCCESS,
 } from './selected-todo';
 
@@ -63,6 +69,24 @@ describe('Selected todo actions', () => {
     const action = new UpdateTodoFailureAction();
 
     expect({ ...action }).toEqual({ type: UPDATE_TODO_FAILURE });
+  });
+
+  it('Should return a UpdateTodoStatusAction', () => {
+    const action = new UpdateTodoStatusAction('1', 'open');
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO_STATUS, id: '1', status: 'open' });
+  });
+
+  it('Should return a UpdateTodoStatusSuccessAction', () => {
+    const action = new UpdateTodoStatusSuccessAction();
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO_STATUS_SUCCESS });
+  });
+
+  it('Should return a UpdateTodoStatusFailureAction', () => {
+    const action = new UpdateTodoStatusFailureAction();
+
+    expect({ ...action }).toEqual({ type: UPDATE_TODO_STATUS_FAILURE });
   });
 
   it('Should return DeleteTodoAction', () => {
