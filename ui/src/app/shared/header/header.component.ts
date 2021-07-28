@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements AfterViewInit {
   @Input() breadcrums = [];
 
-  @ContentChild('headerLeft', { static: false }) headerLeft: TemplateRef<any>;
+  @ContentChild('headerLeft') headerLeft: TemplateRef<any>;
   constructor(private readonly cdr: ChangeDetectorRef, private readonly router: Router) {}
 
   ngAfterViewInit() {
