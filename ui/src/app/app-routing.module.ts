@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TodoListComponent } from './todos/todo-list/todo-list.component';
+import { ViewTodosListComponent } from './todos/view-todos/view-todos.component';
 import { ViewTodoComponent } from './todos/view-todo/view-todo.component';
 
 const routes: Routes = [
   {
     path: 'todos',
-    component: TodoListComponent,
+    component: ViewTodosListComponent,
   },
   { path: 'todo/:id', component: ViewTodoComponent },
   { path: '', redirectTo: 'todos', pathMatch: 'full' },

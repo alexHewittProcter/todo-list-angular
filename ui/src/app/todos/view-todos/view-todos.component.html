@@ -1,0 +1,21 @@
+<app-header [breadcrums]="breadcrums">
+  <ng-template #headerLeft>
+    <h2>Todos</h2>
+  </ng-template>
+  <div class="header-right">
+    <button class="btn btn-block btn-success" (click)="createTodo()">Create</button>
+  </div>
+</app-header>
+<div>
+  <tabset>
+    <tab heading="Open"> </tab>
+    <tab heading="Done"> </tab>
+    <tab heading="All"></tab>
+  </tabset>
+  <app-todo-list
+    [todos]="todos$ | async"
+    (onView)="viewTodo($event)"
+    (onEdit)="editTodo($event)"
+    (onDelete)="deleteTodo($event)"
+  ></app-todo-list>
+</div>

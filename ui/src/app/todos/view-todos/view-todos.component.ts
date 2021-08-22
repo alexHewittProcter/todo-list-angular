@@ -12,11 +12,11 @@ import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.com
 import { DeleteTodoAction } from 'src/app/core/store/actions/selected-todo';
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss'],
+  selector: 'app-view-todos',
+  templateUrl: './view-todos.component.html',
+  styleUrls: ['./view-todos.component.scss'],
 })
-export class TodoListComponent {
+export class ViewTodosListComponent {
   breadcrums = ['todos'];
   todos$: Observable<Todo[]>;
 
@@ -29,7 +29,7 @@ export class TodoListComponent {
     this.todos$ = this.store.select(getTodos);
   }
 
-  todoClick(todoId: string) {
+  viewTodo(todoId: string) {
     this.router.navigate(['todo', todoId]);
   }
 
