@@ -6,3 +6,5 @@ export const mockTodo1: Todo = {
   description: 'Test',
   status: 'open',
 };
+
+export const mockTodo2: Todo = { id: '2', title: 'Todo 2', description: 'Test', status: 'done' };

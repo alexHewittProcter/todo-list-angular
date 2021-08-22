@@ -7,7 +7,7 @@ import { Todo } from 'src/app/core/models/todo';
 import { IModalConfig, ModalService } from 'src/app/core/services/modal/modal.service';
 import { LoadTodosAction } from 'src/app/core/store/actions';
 import { AppState } from 'src/app/core/store/reducer';
-import { getTodos } from 'src/app/core/store/selectors';
+import { getDoneTodos, getOpenTodos, getTodos } from 'src/app/core/store/selectors';
 import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.component';
 import { DeleteTodoAction } from 'src/app/core/store/actions/selected-todo';
 
@@ -19,6 +19,8 @@ import { DeleteTodoAction } from 'src/app/core/store/actions/selected-todo';
 export class ViewTodosListComponent {
   breadcrums = ['todos'];
   todos$: Observable<Todo[]>;
+  openTodos$: Observable<Todo[]>;
+  doneTodos$: Observable<Todo[]>;
 
   constructor(
     private readonly store: Store<AppState>,
@@ -27,6 +29,8 @@ export class ViewTodosListComponent {
   ) {
     this.store.dispatch(new LoadTodosAction());
     this.todos$ = this.store.select(getTodos);
+    this.openTodos$ = this.store.select(getOpenTodos);
+    this.doneTodos$ = this.store.select(getDoneTodos);
   }
 
   viewTodo(todoId: string) {
@@ -59,5 +63,9 @@ export class ViewTodosListComponent {
 
   deleteTodo(id: string) {
     this.store.dispatch(new DeleteTodoAction(id, 'list'));
+  }
+
+  tabSelected() {
+    this.store.dispatch(new LoadTodosAction());
   }
 }

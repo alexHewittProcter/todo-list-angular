@@ -2,4 +2,8 @@
   .todo-card {
     cursor: pointer;
   }
+
+  ::ng-deep tab {
+    padding-top: 15px;
+  }
 }

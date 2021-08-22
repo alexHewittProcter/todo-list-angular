@@ -8,14 +8,29 @@
 </app-header>
 <div>
   <tabset>
-    <tab heading="Open"> </tab>
-    <tab heading="Done"> </tab>
-    <tab heading="All"></tab>
+    <tab heading="Open" (selectTab)="tabSelected()">
+      <app-todo-list
+        [todos]="openTodos$ | async"
+        (onView)="viewTodo($event)"
+        (onEdit)="editTodo($event)"
+        (onDelete)="deleteTodo($event)"
+      ></app-todo-list>
+    </tab>
+    <tab heading="Done" (selectTab)="tabSelected()">
+      <app-todo-list
+        [todos]="doneTodos$ | async"
+        (onView)="viewTodo($event)"
+        (onEdit)="editTodo($event)"
+        (onDelete)="deleteTodo($event)"
+      ></app-todo-list>
+    </tab>
+    <tab heading="All" (selectTab)="tabSelected()">
+      <app-todo-list
+        [todos]="todos$ | async"
+        (onView)="viewTodo($event)"
+        (onEdit)="editTodo($event)"
+        (onDelete)="deleteTodo($event)"
+      ></app-todo-list>
+    </tab>
   </tabset>
-  <app-todo-list
-    [todos]="todos$ | async"
-    (onView)="viewTodo($event)"
-    (onEdit)="editTodo($event)"
-    (onDelete)="deleteTodo($event)"
-  ></app-todo-list>
 </div>

@@ -127,4 +127,10 @@ describe('ViewTodosListComponent', () => {
     component.deleteTodo(mockTodo1.id);
     expect(store.dispatch).toHaveBeenCalledWith(new DeleteTodoAction(mockTodo1.id, 'list'));
   });
+
+  it('Should dispatch a `LoadTodosAction` when `tabSelected` is called', () => {
+    component.tabSelected();
+
+    expect(store.dispatch).toHaveBeenCalledWith(new LoadTodosAction());
+  });
 });
