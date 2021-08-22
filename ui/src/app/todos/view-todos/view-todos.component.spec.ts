@@ -8,15 +8,18 @@ import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { ModalService } from 'src/app/core/services/modal/modal.service';
 import { LoadTodosAction } from 'src/app/core/store/actions';
 import { DeleteTodoAction } from 'src/app/core/store/actions/selected-todo';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from 'src/app/components/shared.module';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
-import { TodoCardComponent } from './todo-card/todo-card.component';
+import { TodoCardComponent } from '../../components/todo-card/todo-card.component';
 
-import { TodoListComponent } from './todo-list.component';
+import { ViewTodosListComponent } from './view-todos.component';
+import { TodoCardModule } from 'src/app/components/todo-card/todo-card.module';
+import { TodoListModule } from 'src/app/components/todo-list/todo-list.module';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
-describe('TodoListComponent', () => {
-  let component: TodoListComponent;
-  let fixture: ComponentFixture<TodoListComponent>;
+describe('ViewTodosListComponent', () => {
+  let component: ViewTodosListComponent;
+  let fixture: ComponentFixture<ViewTodosListComponent>;
 
   let store: MockStore;
 
@@ -43,8 +46,8 @@ describe('TodoListComponent', () => {
     setOpenSpyReturn();
 
     TestBed.configureTestingModule({
-      declarations: [TodoListComponent, TodoCardComponent],
-      imports: [SharedModule],
+      declarations: [ViewTodosListComponent],
+      imports: [SharedModule, TodoCardModule, TodoListModule, TabsModule.forRoot()],
       providers: [
         provideMockStore({ initialState }),
         { provide: Router, useValue: { navigate: navigateSpy } },
@@ -57,7 +60,7 @@ describe('TodoListComponent', () => {
     store = TestBed.get(Store);
     spyOn(store, 'dispatch').and.callThrough();
 
-    fixture = TestBed.createComponent(TodoListComponent);
+    fixture = TestBed.createComponent(ViewTodosListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

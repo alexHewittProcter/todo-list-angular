@@ -36,7 +36,6 @@ export class ViewTodoComponent implements OnInit, OnDestroy {
   ) {
     this.todoDetails$ = this.store.select(getTodoDetails);
     this.todoDetails$.pipe(takeUntil(this.destroy$)).subscribe((todo) => {
-      console.log(todo);
       this.todo = todo;
     });
   }

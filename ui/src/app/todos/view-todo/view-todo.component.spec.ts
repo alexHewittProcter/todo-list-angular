@@ -11,7 +11,7 @@ import {
   UpdateTodoStatusAction,
 } from 'src/app/core/store/actions/selected-todo';
 import { getTodoDetails } from 'src/app/core/store/selectors';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from 'src/app/components/shared.module';
 import { TodoFormComponent } from '../todo-form/todo-form.component';
 
 import { ViewTodoComponent } from './view-todo.component';
