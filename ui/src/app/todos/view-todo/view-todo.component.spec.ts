@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { mockTodo1 } from 'src/app/core/mock/todos';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { ModalService } from 'src/app/core/services/modal/modal.service';
@@ -19,6 +19,8 @@ import { ViewTodoComponent } from './view-todo.component';
 describe('ViewTodoComponent', () => {
   let component: ViewTodoComponent;
   let fixture: ComponentFixture<ViewTodoComponent>;
+  let router: Router;
+  let activatedRoute: ActivatedRoute;
   let openSpy: jasmine.Spy;
   const setOpenSpyReturn = (state = TODO_FORM_CLOSE_MODAL_STATES.TODO_CREATED) => {
     openSpy.and.returnValue({
@@ -56,7 +58,13 @@ describe('ViewTodoComponent', () => {
         },
         { provide: Store, useValue: { dispatch, select } },
         { provide: ModalService, useValue: { open: openSpy } },
-        { provide: Router, useValue: { navigate: jasmine.createSpy() } },
+        {
+          provide: Router,
+          useValue: {
+            navigate: jasmine.createSpy(),
+            events: new BehaviorSubject(new NavigationEnd(1, '/todo/1', '')),
+          },
+        },
       ],
     }).compileComponents();
   }));
@@ -64,6 +72,8 @@ describe('ViewTodoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ViewTodoComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
+    activatedRoute = TestBed.inject(ActivatedRoute);
     fixture.detectChanges();
   });
 
@@ -78,6 +88,17 @@ describe('ViewTodoComponent', () => {
 
     it('should dispatch', () => {
       expect(dispatch).toHaveBeenCalledWith(new LoadSelectedTodoAction({ todoId: '1' }));
+    });
+
+    it('Should listen for router events, refreshing the todo data to reflect navigation', () => {
+      expect(dispatch).toHaveBeenCalledWith(new LoadSelectedTodoAction({ todoId: '1' }));
+
+      activatedRoute.snapshot.params.id = '4';
+      (router.events as BehaviorSubject<NavigationEnd>).next(new NavigationEnd(1, '/todo/4', ''));
+
+      fixture.detectChanges();
+
+      expect(dispatch).toHaveBeenCalledWith(new LoadSelectedTodoAction({ todoId: '4' }));
     });
   });
 

@@ -3,9 +3,16 @@ import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable, of, throwError } from 'rxjs';
-import { mockTodo1 } from '../../mock/todos';
+import { mockTodo1, mockTodos } from '../../mock/todos';
 import { ApiService } from '../../services/api/api.service';
-import { LoadTodosAction, LoadTodosFailureAction, LoadTodosSuccessAction } from '../actions';
+import {
+  LoadTodosAction,
+  LoadTodosFailureAction,
+  LoadTodosSuccessAction,
+  SearchTodosAction,
+  SearchTodosFailureAction,
+  SearchTodosSuccessAction,
+} from '../actions';
 import { TodosEffects } from './todos';
 
 describe('TodosEffects', () => {
@@ -16,6 +23,7 @@ describe('TodosEffects', () => {
   beforeEach(() => {
     mockApiService = {
       getTodos: jasmine.createSpy(),
+      searchTodos: jasmine.createSpy(),
     };
     TestBed.configureTestingModule({
       providers: [
@@ -56,6 +64,34 @@ describe('TodosEffects', () => {
       const expected$ = cold('-b', { b: outputAction });
 
       expect(effects.loadTodos$).toBeObservable(expected$);
+    });
+  });
+
+  describe('searchTodos', () => {
+    it('Should dispatch a SearchTodosSuccessAction', () => {
+      mockApiService.searchTodos.and.returnValue(of(mockTodos));
+
+      const inputAction = new SearchTodosAction('');
+      const outputAction = new SearchTodosSuccessAction(mockTodos);
+
+      actions$ = hot('-a--', { a: inputAction });
+
+      const expected$ = cold('-b', { b: outputAction });
+
+      expect(effects.searchTodos$).toBeObservable(expected$);
+    });
+
+    it('Should dispatch a SearchTodosFailureAction when API returns an error', () => {
+      mockApiService.searchTodos.and.returnValue(throwError('Error'));
+
+      const inputAction = new SearchTodosAction('');
+      const outputAction = new SearchTodosFailureAction();
+
+      actions$ = hot('-a--', { a: inputAction });
+
+      const expected$ = cold('-b', { b: outputAction });
+
+      expect(effects.searchTodos$).toBeObservable(expected$);
     });
   });
 });

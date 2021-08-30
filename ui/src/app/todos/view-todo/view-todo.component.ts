@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { Todo } from 'src/app/core/models/todo';
 import { TODO_FORM_CLOSE_MODAL_STATES } from 'src/app/core/models/todo-form';
 import { IModalConfig, ModalService } from 'src/app/core/services/modal/modal.service';
@@ -20,7 +20,7 @@ import { TodoFormComponent, TodoFormModalData } from '../todo-form/todo-form.com
   templateUrl: './view-todo.component.html',
   styleUrls: ['./view-todo.component.scss'],
 })
-export class ViewTodoComponent implements OnInit, OnDestroy {
+export class ViewTodoComponent implements OnDestroy {
   breadcrums = ['todos', 'todo'];
   private todoId: string;
   private todo: Todo;
@@ -32,17 +32,22 @@ export class ViewTodoComponent implements OnInit, OnDestroy {
   constructor(
     private readonly store: Store<AppState>,
     private readonly route: ActivatedRoute,
-    private readonly modalService: ModalService
+    private readonly modalService: ModalService,
+    private readonly router: Router
   ) {
     this.todoDetails$ = this.store.select(getTodoDetails);
     this.todoDetails$.pipe(takeUntil(this.destroy$)).subscribe((todo) => {
       this.todo = todo;
     });
-  }
-
-  ngOnInit() {
-    this.todoId = this.route.snapshot.params.id;
-    this.loadTodo();
+    this.router.events
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((e): e is NavigationEnd => e instanceof NavigationEnd)
+      )
+      .subscribe(() => {
+        this.todoId = this.route.snapshot.params.id;
+        this.loadTodo();
+      });
   }
 
   ngOnDestroy() {

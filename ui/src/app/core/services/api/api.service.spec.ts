@@ -2,7 +2,7 @@ import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { ApiService } from './api.service';
-import { mockTodo1 } from '../../mock/todos';
+import { mockTodo1, mockTodos } from '../../mock/todos';
 
 describe('ApiService', () => {
   let apiService: ApiService;
@@ -82,6 +82,19 @@ describe('ApiService', () => {
 
     const req = httpMock.expectOne('/api/todo');
     expect(req.request.method).toBe('DELETE');
+    req.flush(response);
+    tick(100);
+  }));
+
+  it('Should return a filtered selection of todos based on the search term', fakeAsync(() => {
+    const query = 'test';
+
+    const response = { todos: mockTodos };
+
+    apiService.searchTodos(query).subscribe((v) => expect(v).toEqual(response.todos));
+
+    const req = httpMock.expectOne(`/api/search?query=${query}`);
+    expect(req.request.method).toBe('GET');
     req.flush(response);
     tick(100);
   }));

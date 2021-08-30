@@ -44,4 +44,9 @@ export class ApiService {
       .request('DELETE', '/api/todo', { responseType: 'json', body: { id } })
       .pipe(map((v: { id: string }) => v.id));
   }
+
+  searchTodos(term: string): Observable<Todo[]> {
+    const params = new HttpParams().set('query', term);
+    return this.http.get('/api/search', { params }).pipe(map((v: { todos: Todo[] }) => v.todos));
+  }
 }
