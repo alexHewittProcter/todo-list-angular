@@ -11,6 +11,10 @@ import {
   LoadTodosFailureAction,
   LoadTodosSuccessAction,
   LOAD_TODOS,
+  SearchTodosAction,
+  SearchTodosFailureAction,
+  SearchTodosSuccessAction,
+  SEARCH_TODOS,
 } from '../actions';
 
 @Injectable()
@@ -36,6 +40,18 @@ export class TodosEffects {
         map((v) => {
           return new LoadTodosAction();
         })
+      );
+    })
+  );
+
+  @Effect() public searchTodos$: Observable<Action> = this.actions$.pipe(
+    ofType(SEARCH_TODOS),
+    switchMap((action: SearchTodosAction) => {
+      return this.apiService.searchTodos(action.query).pipe(
+        map((v) => {
+          return new SearchTodosSuccessAction(v);
+        }),
+        catchError(() => of(new SearchTodosFailureAction()))
       );
     })
   );

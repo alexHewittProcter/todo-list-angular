@@ -9,6 +9,10 @@ export const CREATE_TODO = 'CREATE_TODO';
 export const CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS';
 export const CREATE_TODO_FAILURE = 'CREATE_TODO_FAILURE';
 
+export const SEARCH_TODOS = 'SEARCH_TODOS';
+export const SEARCH_TODOS_SUCCESS = 'SEARCH_TODOS_SUCCESS';
+export const SEARCH_TODOS_FAILURE = 'SEARCH_TODOS_FAILURE';
+
 export class LoadTodosAction implements Action {
   readonly type = LOAD_TODOS;
 }
@@ -35,10 +39,27 @@ export class CreateTodoFailureAction implements Action {
   readonly type = CREATE_TODO_FAILURE;
 }
 
+export class SearchTodosAction implements Action {
+  readonly type = SEARCH_TODOS;
+  constructor(public query: string) {}
+}
+
+export class SearchTodosSuccessAction implements Action {
+  readonly type = SEARCH_TODOS_SUCCESS;
+  constructor(public payload: Todo[]) {}
+}
+
+export class SearchTodosFailureAction implements Action {
+  readonly type = SEARCH_TODOS_FAILURE;
+}
+
 export type TodosActions =
   | LoadTodosAction
   | LoadTodosSuccessAction
   | LoadTodosFailureAction
   | CreateTodoAction
   | CreateTodoSuccessAction
-  | CreateTodoFailureAction;
+  | CreateTodoFailureAction
+  | SearchTodosAction
+  | SearchTodosSuccessAction
+  | SearchTodosFailureAction;

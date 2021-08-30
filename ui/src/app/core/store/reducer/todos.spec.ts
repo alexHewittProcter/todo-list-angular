@@ -1,9 +1,10 @@
-import { mockTodo1 } from '../../mock/todos';
+import { mockTodo1, mockTodos } from '../../mock/todos';
 import {
   CreateTodoAction,
   CreateTodoFailureAction,
   CreateTodoSuccessAction,
   LoadTodosSuccessAction,
+  SearchTodosSuccessAction,
 } from '../actions';
 import { todosReducer, TodosState } from './todos';
 
@@ -11,6 +12,7 @@ describe('Todos reducer', () => {
   const initialState: TodosState = {
     todos: [],
     isCreatingTodo: false,
+    todoSearch: [],
   };
   it('should add todos when receving LoadTodosSuccessAction', () => {
     const state = initialState;
@@ -47,5 +49,14 @@ describe('Todos reducer', () => {
     const actual = todosReducer(state, action);
 
     expect(actual.isCreatingTodo).toBe(false);
+  });
+
+  it('Should set todoSearch with todos when receiving a SearchTodosSuccessAction', () => {
+    const state = { ...initialState, todoSearch: [] };
+    const action = new SearchTodosSuccessAction(mockTodos);
+
+    const actual = todosReducer(state, action);
+
+    expect(actual.todoSearch).toEqual(mockTodos);
   });
 });

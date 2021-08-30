@@ -1,10 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
+import { LiveSearchModule } from '../components/live-search/live-search.module';
+import { mockTodo1 } from '../core/mock/todos';
 
 import { NavbarComponent } from './navbar.component';
 
 describe('NavbarComponent', () => {
+  const initialState = {
+    todos: {
+      todos: [mockTodo1],
+    },
+  };
+
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
 
@@ -14,7 +23,11 @@ describe('NavbarComponent', () => {
     navgiateSpy = jasmine.createSpy();
     TestBed.configureTestingModule({
       declarations: [NavbarComponent],
-      providers: [{ provide: Router, useValue: { navigate: navgiateSpy } }],
+      providers: [
+        { provide: Router, useValue: { navigate: navgiateSpy } },
+        provideMockStore({ initialState }),
+      ],
+      imports: [LiveSearchModule],
     }).compileComponents();
   }));
 

@@ -11,3 +11,5 @@ export const getOpenTodos = createSelector(getTodos, (v: Todo[]) =>
 export const getDoneTodos = createSelector(getTodos, (v: Todo[]) =>
   v.filter((v) => v.status === 'done')
 );
+
+export const getTodoSearch = (state: AppState) => state.todos.todoSearch || [];

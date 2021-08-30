@@ -23,7 +23,7 @@ module.exports = function (config) {
     },
     reporters: ['kjhtml', 'spec'],
     specReporter: {
-      maxLogLines: 5, // limit number of lines logged per test
+      maxLogLines: 50, // limit number of lines logged per test
       suppressErrorSummary: true, // do not print error summary
       suppressFailed: false, // do not print information about failed tests
       suppressPassed: false, // do not print information about passed tests

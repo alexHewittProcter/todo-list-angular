@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { from } from 'rxjs';
-import { mockTodo1, mockTodo2 } from '../../mock/todos';
+import { mockTodo1, mockTodo2, mockTodos } from '../../mock/todos';
 import { Todo } from '../../models/todo';
-import { LoadTodosSuccessAction } from '../actions';
+import { LoadTodosSuccessAction, SearchTodosSuccessAction } from '../actions';
 import * as fromRoot from '../reducer';
-import { getDoneTodos, getOpenTodos, getTodos } from './todos';
+import { getDoneTodos, getOpenTodos, getTodos, getTodoSearch } from './todos';
 
 describe('Todos selectors', () => {
   let store: Store<fromRoot.AppState>;
@@ -61,5 +61,17 @@ describe('Todos selectors', () => {
     store.dispatch(new LoadTodosSuccessAction(payload));
 
     expect(result).toEqual([mockTodo2]);
+  });
+
+  it('Should return a list of todos', () => {
+    let result: Todo[];
+    store.select(getTodoSearch).subscribe((todos) => {
+      result = todos;
+    });
+
+    expect(result).toEqual([]);
+
+    store.dispatch(new SearchTodosSuccessAction(mockTodos));
+    expect(result).toEqual(mockTodos);
   });
 });

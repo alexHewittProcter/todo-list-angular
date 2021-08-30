@@ -1,4 +1,4 @@
-import { mockTodo1 } from '../../mock/todos';
+import { mockTodo1, mockTodos } from '../../mock/todos';
 import {
   CreateTodoAction,
   CreateTodoFailureAction,
@@ -12,6 +12,12 @@ import {
   LOAD_TODOS,
   LOAD_TODOS_FAILURE,
   LOAD_TODOS_SUCCESS,
+  SearchTodosAction,
+  SearchTodosFailureAction,
+  SearchTodosSuccessAction,
+  SEARCH_TODOS,
+  SEARCH_TODOS_FAILURE,
+  SEARCH_TODOS_SUCCESS,
 } from './todos';
 
 describe('Todos Actions', () => {
@@ -50,5 +56,25 @@ describe('Todos Actions', () => {
     const action = new CreateTodoFailureAction();
 
     expect({ ...action }).toEqual({ type: CREATE_TODO_FAILURE });
+  });
+
+  describe('Search todos actions', () => {
+    it('Should return SearchTodosAction', () => {
+      const action = new SearchTodosAction('test');
+
+      expect({ ...action }).toEqual({ type: SEARCH_TODOS, query: 'test' });
+    });
+
+    it('Should return SearchTodosSuccessAction', () => {
+      const action = new SearchTodosSuccessAction(mockTodos);
+
+      expect({ ...action }).toEqual({ type: SEARCH_TODOS_SUCCESS, payload: mockTodos });
+    });
+
+    it('Should return SearchTodosFailureAction', () => {
+      const action = new SearchTodosFailureAction();
+
+      expect({ ...action }).toEqual({ type: SEARCH_TODOS_FAILURE });
+    });
   });
 });

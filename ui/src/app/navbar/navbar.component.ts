@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Todo } from '../core/models/todo';
+import { SearchTodosAction } from '../core/store/actions';
+import { getTodoSearch } from '../core/store/selectors';
 
 @Component({
   selector: 'app-navbar',
@@ -7,11 +12,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  constructor(private readonly router: Router) {}
+  todoSearchResults$: Observable<Todo[]>;
+
+  constructor(private readonly router: Router, private readonly store: Store) {
+    this.todoSearchResults$ = this.store.select(getTodoSearch);
+  }
 
   ngOnInit() {}
 
   onClick() {
     this.router.navigate(['todos']);
+  }
+
+  onTodoSearch(term: string) {
+    console.log('onTodoSearch');
+    console.log(term);
+    this.store.dispatch(new SearchTodosAction(term));
   }
 }
