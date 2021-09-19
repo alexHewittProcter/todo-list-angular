@@ -20,6 +20,10 @@ class TestHostComponent {
   onSearch = jasmine.createSpy();
 }
 
+function mockKeyEvent(type = 'Enter') {
+  return { preventDefault: jasmine.createSpy(), stopPropagation: jasmine.createSpy(), key: type };
+}
+
 describe('LiveSearchComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let testHostComponent: TestHostComponent;
@@ -49,7 +53,7 @@ describe('LiveSearchComponent', () => {
     fixture.detectChanges();
   });
 
-  const getInput = () => fixture.debugElement.query(By.css('input[type=search]'));
+  const getInput = () => fixture.debugElement.query(By.css('input[type="search"]'));
   const getDropdown = () => fixture.debugElement.query(By.css('div.dropdown-menu.dropdown-active'));
   const getDropdownItems = () => fixture.debugElement.queryAll(By.css('a.dropdown-item'));
 
@@ -70,13 +74,50 @@ describe('LiveSearchComponent', () => {
 
     it('Should perform a search when the user uses the Enter button', fakeAsync(() => {
       component.form.get('search').setValue('Test');
-      getInput().triggerEventHandler('keyup.enter', {});
+      getInput().triggerEventHandler('keyup', mockKeyEvent());
 
       fixture.detectChanges();
       tick(500);
 
       expect(testHostComponent.onSearch).toHaveBeenCalled();
     }));
+  });
+
+  describe('Keyboard inputs', () => {
+    beforeEach(() => {
+      loadItems(mockTodos);
+      component.form.get('search').setValue('Test');
+      fixture.detectChanges();
+    });
+
+    it('Should highlight the below row in the dropdown when receiving ArrowDown', () => {
+      getInput().triggerEventHandler('keyup', mockKeyEvent('ArrowDown'));
+      fixture.detectChanges();
+
+      expect(component.currentHighlightIndex).toBe(0);
+
+      expect(getDropdownItems()[0].classes['active']).toEqual(true);
+    });
+    it('Should highlight the above row in the dropdown when receiving ArrowUp', () => {
+      getInput().triggerEventHandler('keyup', mockKeyEvent('ArrowDown'));
+      fixture.detectChanges();
+      getInput().triggerEventHandler('keyup', mockKeyEvent('ArrowDown'));
+      fixture.detectChanges();
+      getInput().triggerEventHandler('keyup', mockKeyEvent('ArrowUp'));
+      fixture.detectChanges();
+
+      expect(component.currentHighlightIndex).toBe(0);
+
+      expect(getDropdownItems()[0].classes['active']).toEqual(true);
+    });
+    it('Should navigate to the highlighted item when hitting Enter and a dropdown item is highlighted', () => {
+      getInput().triggerEventHandler('keyup', mockKeyEvent('ArrowDown'));
+      fixture.detectChanges();
+      getInput().triggerEventHandler('keyup', mockKeyEvent());
+      fixture.detectChanges();
+
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['todo', mockTodos[0].id]);
+    });
   });
 
   describe('Displaying items', () => {
