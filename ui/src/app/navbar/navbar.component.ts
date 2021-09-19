@@ -25,8 +25,6 @@ export class NavbarComponent implements OnInit {
   }
 
   onTodoSearch(term: string) {
-    console.log('onTodoSearch');
-    console.log(term);
     this.store.dispatch(new SearchTodosAction(term));
   }
 }
