@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.js --host 0.0.0.0 --disable-host-check=true",
+    "start": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 --disable-host-check=true",
+    "start:proxy": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.js --host 0.0.0.0 --disable-host-check=true",
     "build": "ng build",
     "test": "ng test --watch=false",
     "test:watch": "ng test --watch=true",
