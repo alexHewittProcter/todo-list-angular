@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar.component';
 import { LiveSearchModule } from '../components/live-search/live-search.module';
@@ -7,5 +7,6 @@ import { LiveSearchModule } from '../components/live-search/live-search.module';
   declarations: [NavbarComponent],
   exports: [NavbarComponent],
   imports: [CommonModule, LiveSearchModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class NavbarModule {}

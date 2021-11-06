@@ -15,6 +15,19 @@ services:
       NODE_ENV: ${NODE_ENV}
     networks:
       - backend-net
+  navbar:
+    build:
+      context: ../navbar-comp
+      dockerfile: ../nav.node.Dockerfile
+    volumes:
+      - ../navbar-comp:/app
+      - ../navbar-comp/dist:/app/dist
+    ports:
+      - 4100:4100
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    networks:
+      - backend-net
   api:
     restart: always
     build:
