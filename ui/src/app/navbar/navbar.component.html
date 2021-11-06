@@ -1,9 +1,9 @@
-<nav class="navbar navbar-dark bg-primary">
-  <div class="container-fluid">
-    <span class="navbar-brand mb-0 h1" (click)="onClick()">Todo list</span>
+<custom-navbar (onNavigateHome)="onClick()">
+  <span slot="search">
     <app-live-search
+      #search
       [items]="todoSearchResults$ | async"
       (onSearch)="onTodoSearch($event)"
-    ></app-live-search>
-  </div>
-</nav>
+    ></app-live-search
+  ></span>
+</custom-navbar>
